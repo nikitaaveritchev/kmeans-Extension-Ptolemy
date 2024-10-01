@@ -1,5 +1,33 @@
 \section{Foundations of Ptolemaic Indexing}
 
+To discuss the k-means problem, we first need to formalize the concept of a \emph{clustering algorithm}:
+\begin{definition}[clustering algorithm]
+	Given a target number of clusters $k$,
+	let $F$ be a function that assigns each element from an input data set $D$
+	cluster index $i \in \{1, 2, \ldots, k\}$
+	$$ F:D \to \{1, 2, \ldots, k\} \;.$$
+\end{definition}
+Notably, we restrict our analysis to clustering problems that use the $n$-dimensional Euclidean space as the domain of the input data set: $D \subset \mathbb{R}^n$.
+This also implies that the similarity of the data points to be clustered is completely defined by the Euclidean distance $d(x,y)= || x-y ||_2 $.
+
+The heart of the k-means problem is the assignment of clusters so that the similarity variance between all points in the same cluster should be reasonably small.
+More formally:
+\begin{definition}[$k$-means problem]
+	Let $x_i \in D$ be an element from the input data set of a clustering algorithm $F$
+	and let $C_i$ be the set of all elements assigned to cluster $i$:
+	$$ C_i = \{x \in D \mid F(x) = i\} \,.$$
+	Furthermore, let $E$ be the sum of inter-cluster variances
+	\begin{align}
+		E & = \sum_{i=1}^k \operatorname{Var}[C_i] = \sum_{i=1}^k \sum_{x_j \in C_i}  d(x_j, c_i)\,,
+	\end{align}
+	where $c_i = \operatorname{E}[C_i]$ is the mean over all points in the cluster.
+
+	Then, the map $F$ is called a solution to the $k$-means problem
+	if $E$ cannot be made smaller by changing the assignment of any one element to a different cluster.
+\end{definition}
+\todo{Note that this is a local minimum definition that the Lloyd algorithm can find}
+
+
 
 \todo{explain Hetland's lower (upper) bound notation ($d^-$ and $d^+$)}
 \begin{theorem}[Ptolemaic Bounds]
