@@ -1,0 +1,131 @@
+\section{Foundations of Ptolemaic Indexing}
+
+
+\todo{explain Hetland's lower (upper) bound notation ($d^-$ and $d^+$)}
+\begin{theorem}[Ptolemaic Bounds]
+\label{thm4.2}
+\todo{we might want to explain what the points are supposed to do before showing this theorem.
+Or, alternatively, we just present this as a purely mathematical statement with no preceding motivation.}
+    Let \(a, b, c, c' \in \mathbb{R}^n\) and let \(d(\cdot, \cdot)\) be the Euclidean distance. The distance \(d(a, c')\) can be bounded as follows:
+    \begin{gather}
+        \frac{1}{d(b, c)} \cdot \max \left\{
+        \begin{array}{l}
+            d(a, b)^- \cdot d(c, c') - d(a, c)^+ \cdot d(b, c'), \\
+            d(a, c)^- \cdot d(b, c') - d(a, b)^+ \cdot d(c, c')
+        \end{array}
+        \right\} \leq d(a, c')
+    \end{gather}
+    and
+    \begin{gather}
+        d(a, c') \leq \frac{1}{d(b, c)} \cdot \left( d(a, c) \cdot d(b, c') + d(a, b) \cdot d(c, c') \right)
+    \end{gather}
+\end{theorem}
+\begin{proof}
+    \todo{convert to passive voice}
+    \todo{expand context to summarize all steps that lead to this proof}
+    The lower bound corresponds to the derivation in equation \ref{eq4.4} and corresponds to the arrangement of the two pivot objects. Replace some distances with the respective lower or upper bound for the distance. The lower bounds can be used as they are always smaller than the exact distance. The upper bound must be used due to the subtraction. This means that the inequality still applies. The upper bound is obtained by using Ptolemy's inequality:
+
+    \begin{equation*}
+\begin{aligned}
+\label{eq4.7}
+    d(a,c') \cdot d(b,c) &\leq d(a, c) \cdot d(b, c') + d(a, b) \cdot d(c, c') \\
+    d(a,c') &\leq \frac{d(a, c) \cdot d(b, c') + d(a, b) \cdot d(c, c')}{d(b,c)}
+\end{aligned}
+\end{equation*}
+    By replacing some distances with upper boundaries you get the desired upper boundaries.
+\end{proof}
+
+
+
+
+\section{Applying Ptolemy's Inequality to the Elkan's Algorithm}
+
+
+
+
+\subsection{Integration in k-Means}
+Theorem \ref{thm4.2} will now be applied in a similar context to Elkan's algorithm \ref{alg:elkan}, with the goal of integrating these new bounds into steps 5 and 6 of the algorithm.
+
+Consider the data set \(D = \{x_1, \ldots, x_n\}\). For each \(x_i\), there is an upper \(u_i\) and lower bounds \(l_{ij}\) as in Elkan's algorithm. The new cluster center assigned in a iteration is denoted by \(c_i^{\text{new}}\), and the old cluster center by \(c_i^{\text{old}}\). To use Ptolemy's Inequality, one additional point is needed. The idea is to use an even older cluster center \(c_i^{\text{old,old}}\) obtained two iterations ago. 
+
+Overall, to obtain a new upper bound for the distance between the datapoint \(x_i\) and the new cluster center \(c_j^{\text{new}}\), consider the old cluster center \(c_j^{\text{old}}\) from the last iteration to which \(x_i\) was assigned, and the even older cluster center \(c_j^{\text{old,old}}\) from two iterations ago. Utilize the old upper bounds that were valid for the respective iteration.
+
+\begin{equation*}
+\begin{aligned}
+    d(x_i,c_i^{old}) &\leq u_i^{old}\\
+    d(x_i,c_i^{old, old}) &\leq u_i^{old, old}
+\end{aligned}
+\end{equation*}
+
+Similarly, to obtain a new lower bound for the distance between the datapoint \(x_i\) and the new cluster center \(c_j^{\text{new}}\), the old lower bounds from the respective iterations are used:
+
+\begin{equation*}
+\begin{aligned}
+    l_{i,j}^{\text{old}} &\leq d(x_i, c_j^{\text{old}}) \\
+    l_{i,j}^{\text{old,old}} &\leq d(x_i, c_j^{\text{old,old}})
+\end{aligned}
+\end{equation*}
+
+Using Theorem \ref{thm4.2}, the following upper bound for the distance are obtained:
+\begin{equation}
+\label{eq4.7}
+    d(x_i, c_j^{\text{new}}) \leq u_i^{\text{new}} = \frac{1}{d(c_j^{\text{old}}, c_j^{\text{old,old}})} \cdot \left( u_i^{\text{old}} \cdot d(c_j^{\text{new}}, c_j^{\text{old,old}}) + u_i^{\text{old,old}} \cdot d(c_j^{\text{new}}, c_j^{\text{old}}) \right)
+\end{equation}
+
+and the new lower bound:
+\begin{equation}
+\label{eq4.8}
+    d(x_i, c_j^{\text{new}}) \geq l_{i,j}^{\text{new}} = \frac{1}{d(c_j^{\text{old}}, c_j^{\text{old,old}})} \cdot \max \left\{
+        \begin{array}{l}
+            l_{i,j}^{\text{old,old}} \cdot d(c_j^{\text{old}}, c_j^{\text{new}}) - u_i^{\text{old}} \cdot d(c_j^{\text{new}}, c_j^{\text{old,old}}), \\
+            l_{i,j}^{\text{old}} \cdot d(c_j^{\text{new}}, c_j^{\text{old,old}}) - u_i^{\text{old,old}} \cdot d(c_j^{\text{old}}, c_j^{\text{new}})
+        \end{array}
+    \right\}
+\end{equation}
+
+You can see that the old upper boundaries are required to calculate the new lower boundaries.
+
+Let us now look at how these bounds can be integrated into Elkan's algorithm. It is important to save not only the cluster centres and the bounds of the last iteration, but also those of the penultimate iteration.
+
+At the beginning, all distances to all cluster centres are calculated in the first iteration. The upper bound is set by the distance to the nearest cluster centre, and the lower bounds are determined by the direct distances from the point to the respective cluster centres. An iteration is then performed as with Elkan, which means that bounds from two iterations are now available. This makes it possible to apply the new bounds from equations \ref{eq4.7} and \ref{eq4.8}. The algorithm then iterates, as in the original Elkan algorithm using updating with new update conditions, until the cluster centres converge or a specified number of iterations is reached. It is always important to check whether $d(c_j^{\text{old}}, c_j^{\text{old,old}}) \neq 0$. If this is the case, the update is carried out as for Elkan. The algorithm is displayed in Algorithm \ref{alg:ptolemy}.
+
+
+
+
+\begin{algorithm}
+\caption{Elkan's Algorithm extended with Ptolemy's inequality}
+\label{alg:ptolemy}
+
+\begin{algorithmic}
+
+\State \textbf{Initialization:} Initialize all cluster centers. For each point $x_i$ and each center $c_j$, set the lower bound $l(x_i,c_j)$ and the upper bound $u(x_i)$. Assign each $x_i$ to the nearest cluster $C_j$ such that $c(x_i) = \arg \min_j d(x_i, c_j)$, utilizing Lemma 1 to minimize distance calculations. Set $r(x_i) = \text{true}$ for all points.
+
+\State \textbf{Step 0:} Compute one iteration of Elkan's algorithm. Save old upper and lower bounds of the last two iterations.
+\Repeat
+    \State \textbf{Step 1:}  Compute distances $d(c_i, c_j)$ between all centers, and calculate $s(c_i) = \frac{1}{2} \min_{c_j \neq c_i} d(c_i, c_j)$ for each center $c_i$.
+    \Statex
+    \State \textbf{Step 2:}  Retain points $x_i$ in their current clusters if $u(x_i) \leq s(c(x_i))$.
+    \Statex
+    \State \textbf{Step 3:}  For remaining points, consider $x_i$ for reassignment if:
+        \begin{itemize}
+            \item $c_j \neq c(x_i)$,
+            \item $u(x_i) > l(x_i, c_j)$, and
+            \item $u(x_i) > \frac{1}{2}d(c(x_i), c_j)$.
+        \end{itemize}
+    \Statex
+    \State \textbf{Step 3a:}  If $r(x_i)$ is true, compute $d(x_i, c(x_i))$. Set $r(x_i) = \text{false}$. Otherwise, $u(x_i) =d(x_i, c(x_i))$
+    \Statex
+    \State \textbf{Step 3b:} If $d(x_i, c(x_i)) > l(x_i, c_j)$ or $d(x_i, c(x_i)) > \frac{1}{2}d(c(x_i), c_j)$, compute $d(x_i, c_j)$. Reassign $x_i$ to $C_j$ if $d(x_i, c_j) < d(x_i, c(x_i))$.
+    \Statex
+    \State \textbf{Step 4:} Compute the cluster centers as the centroids of the corresponding clusters $c'_j$.
+    \Statex
+    \State \textbf{Step 5:} If distance between two older cluster is not 0. Update lower bounds by using equation \ref{eq4.8}. Otherwise, update like in Elkan. Save the old lower bounds of the two last iterations.
+    \Statex
+    \State \textbf{Step 6:} If distance between two older cluster is not 0. Update upper bounds by using equation \ref{eq4.7}. Otherwise, update like in Elkan. Reset $r(x_i) = \text{true}$. Save old cluster and upper bounds of the last two iterations.
+    \Statex
+    \State \textbf{Step 7:} Replace each center $c_j$ with $c'_j$.
+
+\Until{convergence}
+
+\end{algorithmic}
+\end{algorithm}

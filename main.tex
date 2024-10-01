@@ -1,0 +1,115 @@
+% !TeX encoding = UTF-8
+% !TeX program = pdflatex
+% !BIB program = bibtex
+
+
+
+\documentclass[english]{lni}
+
+\input{content/preamble}
+
+
+\begin{document}
+%%% Mehrere Autoren werden durch \and voneinander getrennt.
+%%% Die Fußnote enthält die Adresse sowie eine E-Mail-Adresse.
+%%% Das optionale Argument (sofern angegeben) wird für die Kopfzeile verwendet.
+\title[Ein Kurztitel]{Extending K-Means Clustering with Ptolemy’s Inequality}
+%% \subtitle{Untertitel / Subtitle} % if needed
+ \author[1,2]{Max Pernklau}{firstname1.lastname1@affiliation1.org}{0000-0000-0000-0000}
+ \author[2]{Nikita Averitchev}{firstname2.lastname2@affiliation2.org}{0000-0000-0000-0000}
+ \author[3]{Christian Beecks}{firstname3.lastname3@affiliation1.org}{0000-0000-0000-0000}
+% \author[1]{Firstname4 Lastname4}{firstname4.lastname4@affiliation1.org}{0000-0000-0000-0000}%
+ \affil[1]{Universität 1\\Abteilung\\Straße\\Postleitzahl Ort\\Land}
+ \affil[2]{University 2 \\Department\\Address\\Country}
+ \affil[3]{University 3\\Department\\Address\\Country}
+\maketitle
+
+\begin{abstract}
+Clustering is a fundamental data-analytical operation in the field of unsupervised learning. Given a database of unknown structure, clustering aims to discover the inherent structure of the data objects according to similarity, such that similar data objects are grouped together and dissimilar ones are separated in different groups or clusters. %The resulting groups, which are denoted as clusters, then represent the clustering structure of the database. A
+Among the various approaches of clustering methods, we focus on partitioning methods, i.e. on the specific problem of \emph{k-means clustering}, which minimizes the intra-cluster variance. 
+%where the Lloyd algorithm is a prominent and de facto standard implementation.
+As the standard algorithmic approach to k-means clustering, namely the Lloyd algorithm, lacks on efficiency and scalability, various adaptations and modifications have been developed yielding to the family of fast k-means clustering algorithms. In this short paper, we extend the clustering algorithm proposed by Elkan with Ptolemy's inequality, which generalizes the triangle inequality, to prune unnecessary distance calculations. The aim of our short paper is not to compete with the state-of-the-art algorithmic solutions for the k-means clustering problem, but to investigate the potential of Ptolemy’s inequality to further enhancements in the standard algorithm’s performance, specifically in terms of reducing computations associated with distance evaluations.
+
+\end{abstract}
+\begin{keywords}
+k-means clustering \and Lloyd algorithm \and Ptolemy's inequality %Keyword1 \and Keyword2
+\end{keywords}
+%%% Beginn des Artikeltexts
+
+\todo{Americanize spelling (thesis uses chiefly British terms)}
+
+\section{Introduction}
+
+%intro
+Clustering is a fundamental data-analytical operation in the domain of data science, where the basic task is to divide a set of data objects into different groups or clusters, such that objects within the same cluster have sufficient similarities, while objects in different clusters have significant differences. The collection of clusters reflects the inherent structure of the database and is denoted as clustering.
+
+Clustering can be found in various scientific or economic application domains \cite{ezugwu2022comprehensive,oyewole2023data, gan2020data}, ranging from archaeology \cite{troiano2024comparative} and finance \cite{cai2016clustering} to industry \cite{lee2021technological} and zoology \cite{shen2021multivariate}, to name just a few. Especially in the field of unsupervised learning, clustering is utilized to extract structures from unlabeled data \cite{chander2023data}.
+
+Alongside the diverse applications of clustering, unique domain-specific requirements and challenges arise, each of which can be addressed by leveraging different families of clustering approaches \cite{xu2015comprehensive,han2012data}. These approaches, ranging from partitioning and hierarchical methods to density-based, grid-based and graph-based methods, are designed to accommodate varying data characteristics and application-related requirements to facilitate efficient cluster analyses across diverse domains.
+
+%different algorithms/problems
+%kmeans/lloyd
+%fast algorithms
+%inefficient: distance calculations
+%our proposal: ptolemaic
+%our purpose
+
+In this short paper, we focus on partitioning methods due to their simplicity in terms of interpretability and implementability \cite{DBLP:conf/iiwas/BeecksBHLSD22}. In this field, the \emph{k-means algorithm} \cite{bock2007clustering,hans2008origins,DBLP:journals/prl/Jain10,steinley2006k} has become one of the most influential clustering techniques \cite{DBLP:journals/kais/WuKQGYMMNLYZSHS08,olukanmi2019rethinking}. Although the term "k-means algorithm" is explicitly credited to MacQueen \cite{macqueen1967}, its origins trace back to Steinhaus \cite{steinhaus1956division} in 1956, with its first application to data clustering by Forgy \cite{forgy1965cluster} in 1965. The widely recognized version in use today is the \emph{Lloyd algorithm} \cite{DBLP:journals/tit/Lloyd82}, introduced in 1982.
+
+With the proliferation of complex data sources and the growing demand for more efficient clustering techniques, numerous \emph{fast k-means algorithms} have been introduced \cite{DBLP:conf/icml/Elkan03,DBLP:conf/sdm/Hamerly10,drake2012accelerated,hamerly2015accelerating,DBLP:conf/icml/NewlingF16,DBLP:conf/icml/DingZSMM15}. These methods are designed to achieve exact clustering results with significantly reduced computational cost. Moreover, they do not require any form of precomputation, making them directly applicable across a wide range of scenarios.
+
+%contribution
+
+%structure
+
+
+\newpage
+
+\section{Related Work}
+
+
+\input{content/3u4_methods}
+
+
+
+
+\section{Preliminary Results}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.8\textwidth]{fig/gaussia+random.png}
+  \caption{}
+  \label{fig:gauss_univariate}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.8\textwidth]{fig/wine+iris.png}
+  \caption{}
+  \label{fig:data}
+\end{figure}
+
+\todo{
+    Experiments to show:
+    - iris, wine, gaussian, uniform
+    (moons, circles aren't a good fit for k-means -- is that reason enough to exclude them?)
+}
+
+\todo{we should mention that the Pto\_low version performs worse in every test (but one), but we do not need to include it in the comparison between Elkan and Our Work}
+
+\todo{compile a graph that summarizes the four pages of tables}
+
+\todo{How much do we "trust" these results, provided that each test configuration ( [k choice]x[dataset]x[algorithm]) was only run once?
+We might need to repeat and average over these experiments.
+TBD
+}
+
+
+
+\section{Conclusions and Future Work}
+
+
+%%% Angabe der .bib-Datei (ohne Endung) / State .bib file (im Falle der Nutzung von BibTeX)
+\bibliography{references,bibliography_thesis,bibliography_iiwas}
+%% \printbibliography % im Falle der Nutzung von biblatex
+\end{document}
