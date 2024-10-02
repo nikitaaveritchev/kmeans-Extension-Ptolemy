@@ -1,12 +1,11 @@
 \newcommand{\kmeans}{$k$-means problem\xspace}
 
-\section{Preliminaries}
+\section{Preliminaries}\label{Preliminaries}
 
-\lipsum[23]
-\todo{explain structure in 3 sentences}
+In this section, we first define the k-means clustering problem and the Lloyd algorithm as a solution to this problem in Section \ref{subsec: kmeans}. We then continue with introducing means of acceleration via lower and upper bounding in Section \ref{sub:acc}.
 
 
-\subsection{The \kmeans}
+\subsection{The \kmeans} \label{subsec: kmeans}
 
 To discuss the \kmeans, we first need to formalize the concept of a \emph{clustering algorithm}:
 \begin{definition}[clustering algorithm]
@@ -94,7 +93,7 @@ can provide lower and upper bound on the distance between two points given two (
 Numerous algorithms have been developed that exploit the former inequality to avoid explicit distance evaluations. However, to the best of our knowledge, the latter has not been employed for the purposes of accelerating k-means clustering yet.
 
 Therefore, we modify Elkan's algorithm, an existing method that already employs the triangle inequality, to also make use of the Ptolemaic inequality.
-We provide a short summary of Elkan's algorithm \cite{} here and describe our extension in \autoref{sec:contrib}.
+We provide a short summary of Elkan's algorithm \cite{DBLP:conf/icml/Elkan03} here and describe our extension in \autoref{sec:contrib}.
 
 Among Elkan's algorithm maintains two kinds of distance bounds each iteration of the algorithm:
 \begin{enumerate}[label=\roman*]
