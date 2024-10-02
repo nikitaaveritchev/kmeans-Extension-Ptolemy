@@ -11,7 +11,7 @@
 To discuss the \kmeans, we first need to formalize the concept of a \emph{clustering algorithm}:
 \begin{definition}[clustering algorithm]
 	Given a target number of clusters $k$,
-  let $F$ be a function that assigns each element from an input data set $D\subset \mathbb{R}^n$ to a
+	let $F$ be a function that assigns each element from an input data set $D\subset \mathbb{R}^n$ to a
 	cluster index $i \in \{1, 2, \ldots, k\}$
 	$$ F:D \to \{1, 2, \ldots, k\} \;.$$
 \end{definition}
@@ -28,7 +28,7 @@ More formally:
 	$$ C_i = \{x \in D \mid F(x) = i\} \,.$$
 	Furthermore, let $\epsilon$ be the weighted sum of inter-cluster variances
 	$$ \epsilon = \sum_{i=1}^k |C_i| \operatorname{Var}[C_i] = \sum_{i=1}^k \sum_{x_j \in C_i}  d^2(x_j, c_i)\,, $$
-	where $c_i = \operatorname{E}[C_i]$ is the mean over all points in the cluster.
+	where $c_i = \operatorname{E}[C_i]$ is center of cluster $C_i$.
 
 	Then, the map $F$ is called a solution to the \kmeans
 	if $\epsilon$ cannot be made smaller by changing the assignment of any one element to a different cluster.
@@ -81,29 +81,44 @@ This is often possible from geometric considerations alone, when lower and upper
 Two properties of the Euclidean space are of particular use here:
 The triangle inequality
 \begin{align}
-  \label{eq:tri}
-  d(x,y) \leq d(x,z) + d(z,y)
+	\label{eq:tri}
+	d(x,y) \leq d(x,z) + d(z,y)
 \end{align}
 and Ptolemy's inequality
 \begin{align}
-  \label{eq:pto}
-  d(x, y)\cdot d(v, u) \leq d(x, v) \cdot d(y,v) + d(x, u) \cdot d(y, v)
+	\label{eq:pto}
+	d(x, y)\cdot d(v, u) \leq d(x, v) \cdot d(y,v) + d(x, u) \cdot d(y, v)
 \end{align}
 can provide lower and upper bound on the distance between two points given two (respectively five) other distances.
 
 Numerous algorithms have been developed that exploit the former inequality to avoid explicit distance evaluations. However, to the best of our knowledge, the latter has not been employed for the purposes of accelerating k-means clustering yet.
 
 Therefore, we modify Elkan's algorithm, an existing method that already employs the triangle inequality, to also make use of the Ptolemaic inequality.
-We provide a short overview of Elkan's algorithm here and describe our changes in \autoref{sec:contrib}.
-Elkan's algorithm, reproduced from \cite{}, which only uses the triangle inequality, here and extend it by incorporating Ptolemy's inequality in \autoref{}.
+We provide a short summary of Elkan's algorithm \cite{} here and describe our extension in \autoref{sec:contrib}.
 
+Among Elkan's algorithm maintains two kinds of distance bounds each iteration of the algorithm:
+\begin{enumerate}[label=\roman*]
+	\item $u(x) \geq d(x, c_i) \mid i = F(x)$,
+	      upper bounds between data points and their currently assigned centers.
+	\item $l(x, c_i) \leq d(x,c_i) \forall i \neq F(x)$,
+	      lower bounds between points and all other centers.
+\end{enumerate}
+Intuitively, when the upper bound is larger than all lower bounds $u(x)\leq l(x,c_i) \forall i\neq F(X)$, the cluster assignment of a data point has not changed.
+Explicit distances to other clusters are only required when this inequality does not hold, i.e. when the bounds are not tight enough or when the cluster assignment of the data point has indeed changed.
 
+While Elkan's algorithm also employs additional techniques to reduce the number of distance calculations, we want to focus on the calculation of the bounds here;
+a complete description of the algorithm is given in \autoref{alg:elkan}, as reproduced from \cite{}.
+
+\todo{define symbols}
+The lower and upper bounds are calculated at the end of each iteration of Elkan's algorithm and are given by
 \begin{align}
-  \label{eq:elkan_lower}
-  l(x_i, c_j) &= \max \{ l(x_i, c_j) - d(c'_j, c_j), 0 \} \\
-  \label{eq:elkan_upper}
-  u(x_i) &= u(x_i) + d(c'(x_i), c(x_i))
+	\label{eq:elkan_lower}
+	l(x_i, c_j) & = \max \{ l(x_i, c_j) - d(c'_j, c_j), 0 \} \\
+	\label{eq:elkan_upper}
+	u(x_i)      & = u(x_i) + d(c'(x_i), c(x_i)) \;.
 \end{align}
+Verifying their correctness using the triangle inequality (Eq.~\ref{eq:tri}) is straightforward.
+Note that the distan [explain distance calulations]
 
 \input{content/alg_elkan2.tex}
 
