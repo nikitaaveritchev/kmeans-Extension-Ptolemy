@@ -1,22 +1,13 @@
-\todo{If we claim to have implemented the classic k-means, we also have to show that in our plots.}
-Our variant of the k-Means algorithm is tested by implementing the classical k-Means algorithm (Lloyd's algorithm), Elkan's algorithm, and its novel, Ptolemy-based extension in Python.
-The code is available on GitHub~\cite{Averitchev2024kMeansPtolemy}.
-To provide a fair comparison of the algorithms,
-we measure the number of distance calculations instead of wall-clock time.
-This metric was chosen as distance calculations account for the majority of computing time in k-Means algorithms, offering a clear measure of efficiency regardless of implementational optimizations.
 
-Additionally, two intermediate variants were implemented to assess the separate effects of the lower and upper bounds:
-\emph{Ptolemy\_upper} one uses Elkan's lower bound with Ptolemy's upper bound, and \emph{Ptolemy\_lower} uses Ptolemy's lower bound with Elkan's upper bound.
-
+In order to demonstrate the efficacy of our proposed algorithm, we undertake a comparative analysis with the performance of Elkan's algorithm, which it extends.
+We measure the number of distance evaluations for multiple datasets and for different values of $k$, the number of clusters.
+Our implementation is available through GitHub~\cite{Averitchev2024kMeansPtolemy}.
 
 \subsection{Datasets}
-We employ two groups of datasets to compare the different algorithms, summarized in Table~\ref{tab:datasets}:
-The two real-world datasets include the Iris and Wine datasets \cite{pedregosa2011scikit}, which have fixed dimensions and cardinalities and represent different clustering structures.
-The two synthetic datasets include Gaussian and uniformly randomly generated points, which are used to test for the effects of changing dataset dimensionality.
 
-\begin{table}[bp]
+\begin{table}[b]
 	\centering
-	\caption{Datasets Used in the Experiments}
+	\caption{Datasets used in the experiments}
 	\label{tab:datasets}
 	\begin{tabular}{llSS}
 		\toprule
@@ -36,16 +27,36 @@ The two synthetic datasets include Gaussian and uniformly randomly generated poi
 \end{table}
 
 
+We employ two groups of datasets to compare the different algorithms, summarized in Table~\ref{tab:datasets}:
+The two real-world datasets include the Iris and Wine datasets \cite{pedregosa2011scikit}, which have fixed dimensions and cardinalities and represent different clustering structures.
+The two synthetic datasets include Gaussian and uniformly randomly generated points, which are used to test for the effects of changing dataset dimensionality.
+
 \subsection{Experiments}
-The experiments were designed to evaluate the algorithms based on the number of distance calculations, which dominate the computing time in k-Means algorithms. This metric ensures comparability across different implementations and hardware setups. Each algorithm was executed three times on each dataset, with the parameters $k = 3$, $k = 20$, and $k = 100$.
+\todo{If we claim to have implemented the classic k-means, we also have to show that in our plots.}
+Our variant of the k-Means algorithm is tested by implementing the classical k-Means algorithm (Lloyd's algorithm), Elkan's algorithm, and its novel, Ptolemy-based extension in Python.
 
-The results for the Iris and Wine datasets are visualized in Fig. \ref{fig:wine+iris}, while Fig. \ref{fig:gauss_univariate} illustrates the performance on the Random and Gaussian dataset variations. These figures present the speedup relative to Elkan's algorithm, showcasing any improvements introduced by the proposed extension.
+To provide a fair comparison of the algorithms,
+we measure the number of distance calculations instead of wall-clock time.
+As distance calculations account for the majority of computing time in k-Means algorithms, they offer a clear measure of efficiency regardless of implementational optimizations.
 
+Additionally, two intermediate variants were implemented to assess the separate effects of the lower and upper bounds:
+\emph{Ptolemy\_upper} one uses Elkan's lower bound with Ptolemy's upper bound, and \emph{Ptolemy\_lower} uses Ptolemy's lower bound with Elkan's upper bound.
+
+Each algorithm is executed three times on each dataset, with the parameters $k = 3$, $k = 20$, and $k = 100$.
+
+In \autoref{fig:combined}, we report our results as distance calculations saved relative to Elkan's algorithm, showcasing any improvements introduced by the proposed extension.
+
+%The experiments evaluate the algorithms based on the number of distance calculations, which dominate the computing time in k-Means algorithms. This metric ensures comparability across different implementations and hardware setups. 
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{fig/combined_plot.pdf}
-	\caption{}
+	\caption{
+		Relative number of saved distance evaluations, compared to Elkan's algorithm.
+		Top and middle row: Performance increases on synthetic data generated from Gaussian (top) and uniformly random (middle) distributions.
+		The dimensionality of the dataset increases left-to-right.\\
+		Bottom row: Performance increases on the real-world datasets Iris (left) and Wine (right).
+	}
 	\label{fig:combined}
 \end{figure}
 
