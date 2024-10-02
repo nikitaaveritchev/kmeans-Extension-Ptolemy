@@ -1,3 +1,5 @@
+\section{Preliminary Results}
+\label{sec:results}
 
 In order to demonstrate the efficacy of our proposed algorithm, we undertake a comparative analysis with the performance of Elkan's algorithm, which it extends.
 We measure the number of distance evaluations for multiple datasets and for different values of $k$, the number of clusters.
@@ -82,3 +84,5 @@ In higher-dimensional datasets, such as the Random high-dimensional dataset, the
 \textbf{Summary of Results}
 
 The full Ptolemaic algorithm demonstrates consistent and significant improvements over Elkan’s algorithm across a variety of datasets, particularly in scenarios with a high number of clusters and low to medium dimensionality. The Ptolemaic Upper Bound variant performs similarly in many cases, offering comparable efficiency gains, whereas the Ptolemaic Lower Bound variant sometimes struggles, particularly in datasets with higher dimensionality or smaller cluster counts. Overall, the full Ptolemaic algorithm proves to be a robust and efficient alternative to traditional k-Means implementations, especially as the complexity of the clustering task increases.
+
+\todo{limitations subsection!}

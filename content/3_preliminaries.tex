@@ -33,7 +33,7 @@ More formally:
 	Then, the map $F$ is called a solution to the \kmeans
 	if $\epsilon$ cannot be made smaller by changing the assignment of any one element to a different cluster.
 \end{definition}
-Note that with this definition, the common $k$-means algorithms, like Lloyd's \todo{Maybe not mention Lloyd here}, provides solution to the \kmeans,
+Note that with this definition, the common $k$-means algorithms provides solution to the \kmeans,
 as we do not require that $F$ finds the smallest possible $\epsilon$,
 just a local minimum of $\epsilon$.
 This is consistent with the colloquial notion that solutions to the \kmeans ``can be found'',
@@ -105,11 +105,12 @@ Among Elkan's algorithm maintains two kinds of distance bounds each iteration of
 \end{enumerate}
 Intuitively, when the upper bound is larger than all lower bounds $u(x)\leq l(x,c_i) \forall i\neq F(X)$, the cluster assignment of a data point has not changed.
 Explicit distances to other clusters are only required when this inequality does not hold, i.e. when the bounds are not tight enough or when the cluster assignment of the data point has indeed changed.
+It is immediately evident that the quality of the bounds has a significant impact on the achievable improvements in execution speed:
+The larger (smaller) the lower (upper) bound is, the more likely an explicit distance evaluation can be avoided.
 
 While Elkan's algorithm also employs additional techniques to reduce the number of distance calculations, we want to focus on the calculation of the bounds here;
 a complete description of the algorithm is given in \autoref{alg:elkan}, as reproduced from \cite{}.
 
-\todo{define symbols}
 The lower and upper bounds are calculated at the end of each iteration of Elkan's algorithm and are given by
 \begin{align}
 	\label{eq:elkan_lower}
