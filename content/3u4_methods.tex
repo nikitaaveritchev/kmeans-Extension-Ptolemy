@@ -1,20 +1,23 @@
-\section{Preliminaries}
 \newcommand{\kmeans}{$k$-means problem\xspace}
 
+\section{Preliminaries}
+
+\lipsum[23]
 \todo{explain structure in 3 sentences}
+
 
 \subsection{The \kmeans}
 
 To discuss the \kmeans, we first need to formalize the concept of a \emph{clustering algorithm}:
 \begin{definition}[clustering algorithm]
 	Given a target number of clusters $k$,
-	let $F$ be a function that assigns each element from an input data set $D$ to a
+  let $F$ be a function that assigns each element from an input data set $D\subset \mathbb{R}^n$ to a
 	cluster index $i \in \{1, 2, \ldots, k\}$
 	$$ F:D \to \{1, 2, \ldots, k\} \;.$$
 \end{definition}
-Notably, we restrict our analysis to clustering problems that use the $n$-dimensional Euclidean space as the domain of the input data set: $D \subset \mathbb{R}^n$.
-Similarly, we assume that the similarity of the data points to be clustered is completely defined by the Euclidean distance $d(x,y)= || x-y ||_2 $.
-The rationale behind this assumption will be made clear shortly in \autoref{pto}.
+Notably, we restrict our analysis to clustering problems that use the $n$-dimensional Euclidean space as the domain of the input data set.
+Likewise, we assume that the similarity of the data points to be clustered is completely defined by the Euclidean distance $d(x,y)= || x-y ||_2 $.
+The rationale behind this assumption will be made clear shortly in \autoref{sub:acc}.
 
 The heart of the \kmeans is the assignment of clusters so that the variance in similarity between all points in the same cluster should be reasonably small.
 More formally:
@@ -69,6 +72,7 @@ To do so, Lloyd's algorithm calculates the distances between each cluster and ea
 These frequent distance evaluations can make up a significant share of the algorithms computational costs, especially for high-dimensional datasets.
 
 \subsection{Accelerating $k$-means}
+\label{sub:acc}
 
 As we have seen, Lloyd's algorithm requires numerous evaluations of the distance function.
 However, the exact distances do not actually need to be calculated explicitly for every element, as it is sufficient to identify which cluster center is the closest to a given element.
