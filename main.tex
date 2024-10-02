@@ -4,7 +4,6 @@
 
 
 
-\documentclass[english]{lni}
 
 \input{content/preamble}
 
@@ -15,24 +14,24 @@
 %%% Das optionale Argument (sofern angegeben) wird für die Kopfzeile verwendet.
 \title[Ein Kurztitel]{Extending K-Means Clustering with Ptolemy’s Inequality}
 %% \subtitle{Untertitel / Subtitle} % if needed
- \author[1,2]{Max Pernklau}{firstname1.lastname1@affiliation1.org}{0000-0000-0000-0000}
- \author[2]{Nikita Averitchev}{firstname2.lastname2@affiliation2.org}{0000-0000-0000-0000}
- \author[3]{Christian Beecks}{firstname3.lastname3@affiliation1.org}{0000-0000-0000-0000}
+\author[1,2]{Max Pernklau}{firstname1.lastname1@affiliation1.org}{0000-0000-0000-0000}
+\author[2]{Nikita Averitchev}{firstname2.lastname2@affiliation2.org}{0000-0000-0000-0000}
+\author[3]{Christian Beecks}{firstname3.lastname3@affiliation1.org}{0000-0000-0000-0000}
 % \author[1]{Firstname4 Lastname4}{firstname4.lastname4@affiliation1.org}{0000-0000-0000-0000}%
- \affil[1]{Universität 1\\Abteilung\\Straße\\Postleitzahl Ort\\Land}
- \affil[2]{University 2 \\Department\\Address\\Country}
- \affil[3]{University 3\\Department\\Address\\Country}
+\affil[1]{Universität 1\\Abteilung\\Straße\\Postleitzahl Ort\\Land}
+\affil[2]{University 2 \\Department\\Address\\Country}
+\affil[3]{University 3\\Department\\Address\\Country}
 \maketitle
 
 \begin{abstract}
-Clustering is a fundamental data-analytical operation in the field of unsupervised learning. Given a database of unknown structure, clustering aims to discover the inherent structure of the data objects according to similarity, such that similar data objects are grouped together and dissimilar ones are separated in different groups or clusters. %The resulting groups, which are denoted as clusters, then represent the clustering structure of the database. A
-Among the various approaches of clustering methods, we focus on partitioning methods, i.e. on the specific problem of \emph{k-means clustering}, which minimizes the intra-cluster variance. 
-%where the Lloyd algorithm is a prominent and de facto standard implementation.
-As the standard algorithmic approach to k-means clustering, namely the Lloyd algorithm, lacks on efficiency and scalability, various adaptations and modifications have been developed yielding to the family of fast k-means clustering algorithms. In this short paper, we extend the clustering algorithm proposed by Elkan with Ptolemy's inequality, which generalizes the triangle inequality, to prune unnecessary distance calculations. The aim of our short paper is not to compete with the state-of-the-art algorithmic solutions for the k-means clustering problem, but to investigate the potential of Ptolemy’s inequality to further enhancements in the standard algorithm’s performance, specifically in terms of reducing computations associated with distance evaluations.
+	Clustering is a fundamental data-analytical operation in the field of unsupervised learning. Given a database of unknown structure, clustering aims to discover the inherent structure of the data objects according to similarity, such that similar data objects are grouped together and dissimilar ones are separated in different groups or clusters. %The resulting groups, which are denoted as clusters, then represent the clustering structure of the database. A
+	Among the various approaches of clustering methods, we focus on partitioning methods, i.e. on the specific problem of \emph{k-means clustering}, which minimizes the intra-cluster variance.
+	%where the Lloyd algorithm is a prominent and de facto standard implementation.
+	As the standard algorithmic approach to k-means clustering, namely the Lloyd algorithm, lacks on efficiency and scalability, various adaptations and modifications have been developed yielding to the family of fast k-means clustering algorithms. In this short paper, we extend the clustering algorithm proposed by Elkan with Ptolemy's inequality, which generalizes the triangle inequality, to prune unnecessary distance calculations. The aim of our short paper is not to compete with the state-of-the-art algorithmic solutions for the k-means clustering problem, but to investigate the potential of Ptolemy’s inequality to further enhancements in the standard algorithm’s performance, specifically in terms of reducing computations associated with distance evaluations.
 
 \end{abstract}
 \begin{keywords}
-k-means clustering \and Lloyd algorithm \and Ptolemy's inequality %Keyword1 \and Keyword2
+	k-means clustering \and Lloyd algorithm \and Ptolemy's inequality %Keyword1 \and Keyword2
 \end{keywords}
 %%% Beginn des Artikeltexts
 
@@ -81,9 +80,9 @@ With the proliferation of complex data sources and the growing demand for more e
 
 
 \todo{
-    Experiments to show:
-    - iris, wine, gaussian, uniform
-    (moons, circles aren't a good fit for k-means -- is that reason enough to exclude them?)
+	Experiments to show:
+	- iris, wine, gaussian, uniform
+	(moons, circles aren't a good fit for k-means -- is that reason enough to exclude them?)
 }
 
 \todo{we should mention that the Pto\_low version performs worse in every test (but one), but we do not need to include it in the comparison between Elkan and Our Work}

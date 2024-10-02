@@ -1,47 +1,52 @@
-The developed variant of the k-Means algorithm was tested by implementing the classical k-Means algorithm (Lloyd's algorithm), Elkan's algorithm, and the Ptolemy-based extension in Python. The code is available on GitHub~\cite{Averitchev2024kMeansPtolemy}. To provide a fair comparison, a variable was included to count the number of distance calculations for each algorithm. This metric was chosen because distance calculations account for the majority of computing time in k-Means algorithms, offering a clear measure of efficiency regardless of implementation optimizations.
+\todo{If we claim to have implemented the classic k-means, we also have to show that in our plots.}
+Our variant of the k-Means algorithm is tested by implementing the classical k-Means algorithm (Lloyd's algorithm), Elkan's algorithm, and its novel, Ptolemy-based extension in Python.
+The code is available on GitHub~\cite{Averitchev2024kMeansPtolemy}.
+To provide a fair comparison of the algorithms,
+we measure the number of distance calculations instead of wall-clock time.
+This metric was chosen as distance calculations account for the majority of computing time in k-Means algorithms, offering a clear measure of efficiency regardless of implementational optimizations.
 
-Additionally, two intermediate variants were implemented to assess the separate effects of the lower and upper bounds: one uses Elkan's lower bound with Ptolemy's upper bound, and the other uses Ptolemy's lower bound with Elkan's upper bound. 
+Additionally, two intermediate variants were implemented to assess the separate effects of the lower and upper bounds:
+\emph{Ptolemy\_upper} one uses Elkan's lower bound with Ptolemy's upper bound, and \emph{Ptolemy\_lower} uses Ptolemy's lower bound with Elkan's upper bound.
+
 
 \subsection{Datasets}
+We employ two groups of datasets to compare the different algorithms, summarized in Table~\ref{tab:datasets}:
+The two real-world datasets include the Iris and Wine datasets \cite{pedregosa2011scikit}, which have fixed dimensions and cardinalities and represent different clustering structures.
+The two synthetic datasets include Gaussian and uniformly randomly generated points, which are used to test for the effects of changing dataset dimensionality.
 
-A variety of datasets were used to compare the performance of the algorithms. The datasets are summarized in Table~\ref{tab:datasets}. 
-\begin{table}[htbp]
-\centering
-\caption{Datasets Used in the Experiments}
-\label{tab:datasets}
-\begin{tabular}{lll}
-\hline
-\textbf{Dataset} & \textbf{Cardinality} & \textbf{Dimensionality} \\
-\hline
-\multicolumn{3}{l}{\textit{Fixed-Structure Datasets}} \\
-Iris & 150 & 4 \\
-Wine & 178 & 13 \\
-\hline
-\multicolumn{3}{l}{\textit{Variable-Dimension Datasets}} \\
-Gaussian Low Dimension & 10,000 & 10 \\
-Gaussian Medium Dimension & 10,000 & 100 \\
-Gaussian High Dimension & 10,000 & 300 \\
-Random Low Dimension & 5,000 & 10 \\
-Random Medium Dimension & 5,000 & 100 \\
-Random High Dimension & 5,000 & 300 \\
-\hline
-\end{tabular}
+\begin{table}[bp]
+	\centering
+	\caption{Datasets Used in the Experiments}
+	\label{tab:datasets}
+	\begin{tabular}{llSS}
+		\toprule
+		\textbf{Group}                                    & \textbf{Dataset}          & \textbf{Cardinality} & \textbf{Dimensionality} \\
+		\midrule
+		\multirow{2}{*}{\textit{fixed structure}}         & Iris                      & 150                  & 4                       \\
+		                                                  & Wine                      & 178                  & 13                      \\
+		\cmidrule{2-4}
+		\multirow{6}{*}{\textit{variable dimensionality}} & Gaussian Low Dimension    & 10000                & 10                      \\
+		                                                  & Gaussian Medium Dimension & 10000                & 100                     \\
+		                                                  & Gaussian High Dimension   & 10000                & 300                     \\
+		                                                  & Random Low Dimension      & 5000                 & 10                      \\
+		                                                  & Random Medium Dimension   & 5000                 & 100                     \\
+		                                                  & Random High Dimension     & 5000                 & 300                     \\
+		\bottomrule
+	\end{tabular}
 \end{table}
 
-The fixed-structure datasets include the Iris and Wine datasets \cite{pedregosa2011scikit}, which have fixed dimensions and cardinalities and represent different clustering structures. The variable-dimension datasets include Gaussian and Uniform Random datasets, which offer flexibility in terms of dimensionality and cardinality, making them ideal for testing the algorithms under various conditions.
 
 \subsection{Experiments}
-
 The experiments were designed to evaluate the algorithms based on the number of distance calculations, which dominate the computing time in k-Means algorithms. This metric ensures comparability across different implementations and hardware setups. Each algorithm was executed three times on each dataset, with the parameters $k = 3$, $k = 20$, and $k = 100$.
 
 The results for the Iris and Wine datasets are visualized in Fig. \ref{fig:wine+iris}, while Fig. \ref{fig:gauss_univariate} illustrates the performance on the Random and Gaussian dataset variations. These figures present the speedup relative to Elkan's algorithm, showcasing any improvements introduced by the proposed extension.
 
 
 \begin{figure}
-  \centering
-  \includegraphics[width=\textwidth]{fig/combined_plot.pdf}
-  \caption{}
-  \label{fig:combined}
+	\centering
+	\includegraphics[width=\textwidth]{fig/combined_plot.pdf}
+	\caption{}
+	\label{fig:combined}
 \end{figure}
 
 
