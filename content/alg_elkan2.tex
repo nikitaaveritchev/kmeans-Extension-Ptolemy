@@ -2,8 +2,9 @@
 	\caption{Elkan's Algorithm}
 	\label{alg:elkan}
 	\begin{algorithmic}
-		\State \textbf{Initialization:} Initialize all cluster centers. For each point $x_i$ and each center $c_j$, set the lower bound $l(x_i,c_j)$ and the upper bound $u(x_i)$. Assign each $x_i$ to the nearest cluster $C_j$ such that $c(x_i) = \argmin_j d(x_i, c_j)$, utilizing Lemma 1 to minimize distance calculations. Set $r(x_i) = \text{true}$ for all points.
-		\todo{include Lemma 1}
+		\State \textbf{Initialization:} Initialize all cluster centers. For each point $x_i$ and each center $c_j$, set the lower bound $l(x_i,c_j)$ and the upper bound $u(x_i)$. Assign each $x_i$ to the nearest cluster $C_j$ such that $c(x_i) = \argmin_j d(x_i, c_j)$, utilizing that
+		$ d(c_j, c_m) \geq 2d(x_i, c_j) \Rightarrow d(x_i, c_m) \geq d(x_i, c_j) $
+		to minimize distance calculations. Set $r(x_i) = \text{true}$ for all points.
 
 		\Repeat
 		\State \textbf{Step 1:} Compute distances $d(c_i, c_j)$ between all centers, and calculate $s(c_i) = \frac{1}{2} \min_{c_j \neq c_i} d(c_i, c_j)$ for each center $c_i$.
