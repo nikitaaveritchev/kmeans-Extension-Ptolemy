@@ -33,7 +33,7 @@ More formally:
 	Then, the map $F$ is called a solution to the \kmeans
 	if $\epsilon$ cannot be made smaller by changing the assignment of any one element to a different cluster.
 \end{definition}
-Note that with this definition, the common $k$-means algorithms, like Lloyd's, provides solution to the \kmeans,
+Note that with this definition, the common $k$-means algorithms, like Lloyd's \todo{Maybe not mention Lloyd here}, provides solution to the \kmeans,
 as we do not require that $F$ finds the smallest possible $\epsilon$,
 just a local minimum of $\epsilon$.
 This is consistent with the colloquial notion that solutions to the \kmeans ``can be found'',
@@ -115,11 +115,15 @@ The lower and upper bounds are calculated at the end of each iteration of Elkan'
 	\label{eq:elkan_lower}
 	l(x_i, c_j) & = \max \{ l(x_i, c_j) - d(c'_j, c_j), 0 \} \\
 	\label{eq:elkan_upper}
-	u(x_i)      & = u(x_i) + d(c'(x_i), c(x_i)) \;.
+	u(x_i)      & = u(x_i) + d(c'(x_i), c(x_i)) \,,
 \end{align}
-Verifying their correctness using the triangle inequality (Eq.~\ref{eq:tri}) is straightforward.
-Note that the distan [explain distance calulations]
+where the prime symbol ($c'_j$) indicates the location of the new cluster centers, while unprimed cluster centers
+$c_j$ refer to the centers' positions at the end of the previous iteration.
+The given equations for the bounds follow directly from the triangle inequality (Eq.~\ref{eq:tri}).
+
+The calculation of these bounds entails an overhead of $\mathrm{O}(k^2)$ distance calculation per iteration.
+However, this additional cost tends to be small compared to the number of distance calculations $\mathrm{O}(k\cdot|D|)$ that can potentially saved,
+as  $k^2 \ll |D|$ in most practical applications.
+
 
 \input{content/alg_elkan2.tex}
-
-
