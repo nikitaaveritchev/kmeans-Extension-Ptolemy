@@ -1,6 +1,6 @@
 \newcommand{\prev}{\diamond}
 
-\section{Contribution: Applying Ptolemy's Inequality to the Elkan's Algorithm}
+\section{Applying Ptolemy's Inequality to the Elkan's Algorithm}
 \label{sec:contrib}
 
 As seen in the previous section,
@@ -13,9 +13,9 @@ These Ptolemaic bounds often improve upon the triangular bounds, leading to incr
 
 \subsection{Ptolemaic Bounds}
 Recall that the triangle inequality relates the distances between three points,
-while Ptolemy's inequality does so for four points.
-At the end of an iteration of Elkan's algorithm (Step~5~to~7 in \autoref{alg:elkan}),
-the distance bounds between the data points $x_i$ and the new center positions are calculated $c'_j$.
+while Ptolemy's inequality does so for four.
+At the end of an iteration of Elkan's algorithm (Step~5~to~7 in Alg.~\autoref{alg:elkan}),
+the distance bounds between the data points $x_i$ and the new center positions $c'_j$ are calculated.
 Therefore, the three points used in the calculation of the bounds are the aforementioned two points and $c_j$, the cluster center calculated in the previous iteration.
 
 A natural extension to this procedure is then to use an even older cluster center $c^\prev_j$ as a fourth point,
@@ -56,6 +56,12 @@ To formalize, Ptolemy's inequality can be used to calculate the following upper 
 \end{proof}
 
 
+\subsection{Integration}
+To integrate the novel bounds into the existing framework of Elkan's algorithm,
+only Steps~6 and~7 in Alg.~\autoref{alg:elkan} need to be updated to use the new bounds.
+It is possible to only replace either the upper or lower bound, which leads to a hybrid solution that is further explored in \autoref{sec: results}.
+
+As the Ptolemaic bounds require bounds from previous iterations, the first iteration of the algorithm is always conducted with Elkan's original bounds.
 
 
 % As Elkan's algorithm tries to avoid distance calculations during the assignment step,
@@ -66,7 +72,6 @@ To formalize, Ptolemy's inequality can be used to calculate the following upper 
 % Two of these points have a 
 % In Elkan's original algorithm, the three points 
 
-\subsection{Integration}
 
 
 

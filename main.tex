@@ -24,16 +24,16 @@
 
 \maketitle
 \begin{abstract}
-	Clustering is a fundamental data analytics operation in the field of unsupervised learning. Given a database of unknown structure, clustering aims to discover the inherent structure of the data objects according to similarity, such that similar data objects are grouped together, while dissimilar ones are separated in different groups or clusters. 
+	Clustering is a fundamental data analytics operation in the field of unsupervised learning. Given a database of unknown structure, clustering aims to discover the inherent structure of the data objects according to similarity, such that similar data objects are grouped together, while dissimilar ones are separated in different groups or clusters.
 	In this study, we focus on partitioning methods, specifically the \emph{k-means clustering} approach, which minimizes the intra-cluster variance.
 	As the standard algorithmic approach to k-means clustering, namely the Lloyd algorithm, is neither efficient nor scalable, various adaptations and modifications have been developed, resulting in the family of fast k-means clustering algorithms. In this short paper, we extend the clustering algorithm proposed by Elkan with Ptolemy's inequality to prune superfluous distance calculations. It is not our intention with this paper to compete with the state-of-the-art algorithmic solutions for the k-means clustering problem; rather, we seek to investigate the potential of Ptolemy’s inequality to further enhancements in the standard algorithm’s performance, particularly in terms of reducing computations associated with distance evaluations.
- 
- % neither tri → pto nor pto → tri is true
- % which generalizes the triangle inequality,
 
-%where the Lloyd algorithm is a prominent and de facto standard implementation.
+	% neither tri → pto nor pto → tri is true
+	% which generalizes the triangle inequality,
 
-%The resulting groups, which are denoted as clusters, then represent the clustering structure of the database. A
+	%where the Lloyd algorithm is a prominent and de facto standard implementation.
+
+	%The resulting groups, which are denoted as clusters, then represent the clustering structure of the database. A
 
 \end{abstract}
 \begin{keywords}
@@ -46,7 +46,10 @@
 \section{Introduction}
 
 %intro
-Clustering is a fundamental data-analytical operation in the domain of data science, where the basic task is to divide a set of data objects into different groups or clusters, such that objects within the same cluster have sufficient similarities, while objects in different clusters have significant differences. The collection of clusters reflects the inherent structure of the database and is denoted as clustering.
+Clustering is a fundamental data-analytical operation in the domain of data science.
+The basic task is to divide a set of data objects into different groups or clusters, such that objects within the same cluster have sufficient similarities;
+meanwhile objects in different clusters should have significant differences.
+The collection of clusters reflects the inherent structure of the database and is denoted as clustering.
 
 Clustering can be found in various scientific or economic application domains \cite{ezugwu2022comprehensive,oyewole2023data, gan2020data}, ranging from archaeology \cite{troiano2024comparative} and finance \cite{cai2016clustering} to industry \cite{lee2021technological} and zoology \cite{shen2021multivariate}, to name just a few. Especially in the field of unsupervised learning, clustering is utilized to extract structures from unlabeled data \cite{chander2023data}.
 
@@ -63,9 +66,16 @@ In this short paper, we focus on partitioning methods due to their simplicity in
 
 With the proliferation of complex data sources and the growing demand for more efficient clustering techniques, numerous \emph{fast k-means algorithms} have been introduced \cite{DBLP:conf/icml/Elkan03,DBLP:conf/sdm/Hamerly10,drake2012accelerated,hamerly2015accelerating,DBLP:conf/icml/NewlingF16,DBLP:conf/icml/DingZSMM15,DBLP:conf/sisap/SchubertLF21,DBLP:conf/sisap/LangS23}. These methods are designed to achieve exact clustering results with significantly reduced computational cost. Moreover, most of them do not require any form of precomputation, making them directly applicable across a wide range of scenarios. The major objective of fast k-means algorithms is to reduce the number of distance evaluations required when assigning data objects to cluster centers and to safely exclude cluster centers from the assignment process. For this purpose, distances are approximated via lower and upper bounds.
 
-The Elkan algorithm \cite{DBLP:conf/icml/Elkan03}, as one prominent representative of these algorithms particularly suited for high-dimensional scenarios, maintains one upper bound and multiple lower bounds for each data object in order to apply different pruning criteria for each combination of data object and cluster center. While the lower and upper bounds of Elkan's algorithm are directly derived from the triangle inequality, we propose to make use of the Ptolemy inequality instead in order to increase the pruning performance. With this extension, we do not aim to ultimately compete with the state of the art in k-means clustering, but to investigate the potential of Ptolemy’s inequality to further enhancements in the standard algorithm’s performance, specifically in terms of reducing computations associated with distance evaluations. We believe that our research findings offer promising directions for future research and new research impulses for data scientists and practitioners alike.
+The Elkan algorithm \cite{DBLP:conf/icml/Elkan03} is a prominent representative of these algorithms and particularly suited for high-dimensional scenarios.
+It maintains one upper bound and multiple lower bounds for each data object in order to apply different pruning criteria for each combination of data object and cluster center.
+While the lower and upper bounds of Elkan's algorithm are directly derived from the triangle inequality, we propose to utilitze Ptolemy's inequality instead in order to increase the pruning performance.
+With this extension, we do not aim to compete with the state of the art in k-means clustering;
+rather we intend to investigate the potential of Ptolemy’s inequality to further enhancements in the standard algorithm’s performance, specifically in terms of reducing computations associated with distance evaluations. We believe that our research findings offer promising directions for future research and new research impulses for data scientists and practitioners alike.
 
-This short paper is structured as follows: Section \ref{Preliminaries} outlines the k-means problem and Elkan's approach of acceleration the algorithmic computation. Section \ref{sec:contrib} then proposes how to apply Ptolemy's inequality to the aforementioned algorithm. The results of our preliminary performance evaluation are summarized in Section \ref{sec: results} while Section \ref{sec: conclusions} concludes this paper with a short outlook on future work.
+This paper is structured as follows:
+Section~\ref{Preliminaries} outlines the k-means problem and Elkan's approach of acceleration the algorithmic computation.
+In Section~\ref{sec:contrib}, we proposes how to apply Ptolemy's inequality to the aforementioned algorithm as our main contribution.
+The results of our preliminary performance evaluation are detailed in Section~\ref{sec: results}, while Section~\ref{sec: conclusions} concludes this paper with a short outlook on future work.
 
 %contribution
 
@@ -92,7 +102,7 @@ This short paper is structured as follows: Section \ref{Preliminaries} outlines 
 
 \todo{
 	Experiments to show:
-	- iris, wine, gaussian, uniform
+	- iris, wine, Gaussian, uniform
 	(moons, circles aren't a good fit for k-means -- is that reason enough to exclude them?)
 }
 
@@ -113,9 +123,5 @@ This short paper has addressed the problem of efficient data clustering by means
 
 Moreover, the use of the Ptolemy's inequality opens up new avenues for future work. It would be valuable to explore adaptations of this technique for other k-means algorithms and optimizations. In particular for algorithms which rely on the triangle inequality to prune distance calculations, Ptolemy's inequality can potentially be leveraged to achieve an enhancement in performance, making these clustering algorithms more practical for broader range of  applications. \todo{Moreover, the use of Ptolemy’s inequality opens new avenues for future work. Exploring adaptations of this technique for other K-Means algorithms and optimizations could be highly valuable. In particular, algorithms that rely on the triangle inequality to prune distance calculations might leverage Ptolemy’s inequality to enhance performance, making these clustering algorithms more practical for a broader range of applications.}
 
-\pagebreak
-%%% Angabe der .bib-Datei (ohne Endung) / State .bib file (im Falle der Nutzung von BibTeX)
-\todo{re-enable citations}
-\bibliography{references,bibliography_thesis,bibliography_iiwas}
-%\printbibliography % im Falle der Nutzung von biblatex
+%\bibliography{references,bibliography_thesis,bibliography_iiwas}
 \end{document}
