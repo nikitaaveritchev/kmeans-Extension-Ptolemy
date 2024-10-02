@@ -12,7 +12,9 @@
 %%% Mehrere Autoren werden durch \and voneinander getrennt.
 %%% Die Fußnote enthält die Adresse sowie eine E-Mail-Adresse.
 %%% Das optionale Argument (sofern angegeben) wird für die Kopfzeile verwendet.
-\title[Extending K-Means Clustering with Ptolemy’s Inequality]{Extending K-Means Clustering with Ptolemy’s Inequality}
+\title[Extending K-Means Clustering with Ptolemy’s Inequality]{Extending K-Means Clustering with Ptolemy’s Inequality
+\thanks{This work is partly funded by DFG grant No. 454630593: EPIX – Efficient Ptolemaic Indexing.} 
+}
 %% \subtitle{Untertitel / Subtitle} % if needed
 \author[1]{Max Pernklau}{max.pernklau@fernuni-hagen.de}{0009-0007-5520-4093}
 \author[1]{Nikita Averitchev}{naveritchev@gmail.com}{}
@@ -99,29 +101,23 @@ The results of our preliminary performance evaluation are detailed in Section~\r
 \input{content/5_results}
 
 
-
-\todo{
-	Experiments to show:
-	- iris, wine, Gaussian, uniform
-	(moons, circles aren't a good fit for k-means -- is that reason enough to exclude them?)
-}
-
-\todo{we should mention that the Pto\_low version performs worse in every test (but one), but we do not need to include it in the comparison between Elkan and Our Work}
-
-\todo{compile a graph that summarizes the four pages of tables}
-
-\todo{How much do we "trust" these results, provided that each test configuration ( [k choice]x[dataset]x[algorithm]) was only run once?
-We might need to repeat and average over these experiments.
-TBD
-}
-
-
-
 \section{Conclusions and Future Work} \label{sec: conclusions}
 
-This short paper has addressed the problem of efficient data clustering by means of the k-means algorithm. More specifically, we have shown how to extend the more efficient clustering algorithm proposed by Elkan with novel distance approximations derived from Ptolemy's inequality. The results of our preliminary performance evaluation clearly indicate that our proposal achieves significant improvements in performance compared to Elkan's algorithm. %Particularly noteworthy is the increased efficiency with a large number of clusters.
+% This paper addresses efficient data clustering using the $k$-means algorithm.
+% We extend Elkan's algorithm with novel distance approximations derived from Ptolemy's inequality.
+% Preliminary evaluations show significant performance improvements over Elkan's method, particularly with large numbers of clusters at low-to-medium dimensionalities.
+% The application of Ptolemy's inequality opens new avenues for future work, potentially enhancing other k-means algorithms that use triangle inequality for distance pruning. This approach could make clustering algorithms more practical across a broader range of applications.
 
-Moreover, the use of the Ptolemy's inequality opens up new avenues for future work. It would be valuable to explore adaptations of this technique for other k-means algorithms and optimizations. In particular for algorithms which rely on the triangle inequality to prune distance calculations, Ptolemy's inequality can potentially be leveraged to achieve an enhancement in performance, making these clustering algorithms more practical for broader range of  applications. \todo{Moreover, the use of Ptolemy’s inequality opens new avenues for future work. Exploring adaptations of this technique for other K-Means algorithms and optimizations could be highly valuable. In particular, algorithms that rely on the triangle inequality to prune distance calculations might leverage Ptolemy’s inequality to enhance performance, making these clustering algorithms more practical for a broader range of applications.}
+This short paper has addressed the problem of efficient data clustering by means of the k-means algorithm.
+We have shown how to extend the more efficient clustering algorithm proposed by Elkan with novel distance approximations derived from Ptolemy's inequality.
+The results of our preliminary performance evaluation indicate that our proposal achieves significant improvements in performance compared to Elkan's algorithm. %Particularly noteworthy is the increased efficiency with a large number of clusters.
 
-%\bibliography{references,bibliography_thesis,bibliography_iiwas}
+Moreover, the use of the Ptolemy's inequality opens up new avenues for future work.
+Besides conducting more extensive experiments to verify our findings,
+it would be valuable to explore adaptations of this technique for other k-means algorithms and optimizations.
+In particular for algorithms which rely on the triangle inequality to prune distance calculations, Ptolemy's inequality can potentially be leveraged to achieve an enhancement in performance, making these clustering algorithms more practical for broader range of applications.
+
+% \todo{Moreover, the use of Ptolemy’s inequality opens new avenues for future work. Exploring adaptations of this technique for other K-Means algorithms and optimizations could be highly valuable. In particular, algorithms that rely on the triangle inequality to prune distance calculations might leverage Ptolemy’s inequality to enhance performance, making these clustering algorithms more practical for a broader range of applications.}
+
+\bibliography{references,bibliography_thesis,bibliography_iiwas}
 \end{document}
