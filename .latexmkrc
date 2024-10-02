@@ -1,3 +1,4 @@
+#$lualatex = 'lualatex -shell-escape -interaction=batchmode -file-line-error %O %S';
 $pdflatex = 'pdflatex -shell-escape -interaction=batchmode -file-line-error %O %S';
    $max_repeat = 5;
    $pdf_mode = 1;
