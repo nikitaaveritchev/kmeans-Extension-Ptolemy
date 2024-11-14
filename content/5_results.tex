@@ -1,13 +1,13 @@
 
 In order to demonstrate the efficacy of our proposed algorithm, we undertake a comparative analysis with the performance of Elkan's algorithm, which it extends.
-We measure the number of distance evaluations for multiple datasets and for different values of $k$, the number of clusters.
+We measure the number of distance evaluations for different benchmark datasets and for different values of $k$, the number of clusters.
 Our implementation is available through GitHub~\cite{Averitchev2024kMeansPtolemy}.
 
 \subsection{Datasets}
 
 \begin{table}[t]
 	\centering
-	\caption{Datasets used in the experiments}
+	\caption{Datasets used in the experiments.}
 	\label{tab:datasets}
 	\begin{tabular}{llSS}
 		\toprule
@@ -40,11 +40,14 @@ we measure the number of distance calculations instead of wall-clock time.
 As distance calculations account for the majority of computing time in k-Means algorithms, they offer a clear measure of efficiency regardless of implementational optimizations.
 
 Additionally, two intermediate variants were implemented to assess the separate effects of the lower and upper bounds:
-\emph{Ptolemy\_upper} one uses Elkan's lower bound with Ptolemy's upper bound, and \emph{Ptolemy\_lower} uses Ptolemy's lower bound with Elkan's upper bound.
+The \emph{Ptolemy Upper Bound} method uses Elkan's lower bound and Ptolemy's upper bound, while \emph{Ptolemy Lower Bound} uses Ptolemy's lower bound and Elkan's upper bound.
 
 Each algorithm is executed three times on each dataset, with the parameters $k = 3$, $k = 20$, and $k = 100$.
 
-In \autoref{fig:combined}, we report our results as distance calculations saved relative to Elkan's algorithm, showcasing any improvements introduced by the proposed extension.
+In \autoref{fig:combined},
+we report our results in the form of speedups,
+i.e. as the number of distances calculated by our extension,
+divided by the number of distances calculated by Elkan's algorithm.
 
 %The experiments evaluate the algorithms based on the number of distance calculations, which dominate the computing time in k-Means algorithms. This metric ensures comparability across different implementations and hardware setups. 
 
@@ -55,16 +58,17 @@ In \autoref{fig:combined}, we report our results as distance calculations saved 
 	\centering
 	\includegraphics[width=\textwidth]{fig/combined_plot.pdf}
 	\caption{
-		Relative number of saved distance evaluations, compared to Elkan's algorithm.
-		Top and middle row: Performance increases on synthetic data generated from Gaussian (top) and uniformly random (middle) distributions.
-		The dimensionality of the dataset increases left-to-right.\\
-		Bottom row: Performance increases on the real-world datasets Iris (left) and Wine (right).
+		Relative improvement in the number distance evaluations, compared to Elkan's algorithm.
+        A speedup of $>1$ indicates an improvement over Elkan's original algorithm.
+		\textbf{Top and middle row:} Performance increases on synthetic data generated from Gaussian (top) and uniformly random (middle) distributions.
+		The dimensionality of the dataset increases left-to-right.
+		\textbf{Bottom row:} Performance increases on the real-world datasets Iris (left) and Wine (right).
 	}
 	\label{fig:combined}
 \end{figure}
 
 
-The primary focus of this analysis is the full Ptolemaic algorithm, as it is the most robust when comparison to Elkan's algorithm.
+The primary focus of this analysis is the full Ptolemaic algorithm as compared to Elkan's algorithm, since it is the most robust one of the three variants. 
 In general, the full Ptolemaic extension shows substantial improvements in reducing the number of distance evaluations across most scenarios.
 
 \textbf{Number of Clusters.}
@@ -79,7 +83,7 @@ given the additional overhead imposed by the Ptolemaic bounds, which are computa
 The Ptolemaic Upper Bound variant performs comparably to the full Ptolemaic algorithm, especially for larger $k$ values.
 However, the Lower Bound variant underperforms in some cases, particularly with smaller cluster counts or in higher-dimensional datasets.
 
-\textbf{Dimensionality.} The full Ptolemaic algorithm performs well across varying dimensionality. In low-dimensional datasets (10 dimensions), it achieves impressive speedups, particularly at higher cluster counts.
+\textbf{Dimensionality.} The full Ptolemaic algorithm performs well across varying dataset dimensionality. In low-dimensional datasets (10 dimensions), it achieves impressive speedups, particularly at higher cluster counts.
 As dimensionality increases, performance gains persist but become slightly less pronounced.
 Nonetheless, even in higher-dimensional datasets, the full Ptolemaic algorithm remains effective, consistently reducing distance evaluations.
 However, the Ptolemaic lower bound variant often struggles in these higher-dimensional cases, further emphasizing the robustness of the full Ptolemaic approach.
@@ -94,8 +98,9 @@ However, the Ptolemaic lower bound variant often struggles in these higher-dimen
 The presented experiments are subject to three primary constraints:
 (i) While synthetic random datasets provide valuable best-case scenarios, more extensive real-world data with appropriate grouping structures is necessary for comprehensive evaluation.
 (ii) The significant reduction in distance calculations may not directly translate to improved execution times, as Ptolemy's bounds are computationally more expensive than the triangle inequality.
-(iii) Most critically, the limited sample size and fixed initial conditions, particularly the lack of variation in cluster initializations, severely restrict the generalizability of individual measurements.\\
-Despite these limitations, we contend that the observed overall trend remains compelling and warrants further investigation into the application of Ptolemy's inequality for clustering algorithms.
+(iii) Most critically, the limited sample size and fixed initial conditions, particularly the lack of variation in cluster initializations, severely restrict the generalizability of individual measurements.
+
+Despite these limitations, we conclude that the observed overall trend remains compelling and warrants further investigation into the application of Ptolemy's inequality for clustering algorithms.
 
 % The experiments presented suffer from two main factors:
 % - minor caveat: synthetic random datasets are good worst-case scenarios, but larger amounts of real-world data is needed.
