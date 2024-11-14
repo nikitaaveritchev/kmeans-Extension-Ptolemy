@@ -37,10 +37,10 @@ Note that with this definition, the common $k$-means algorithms provides solutio
 as we do not require that $F$ finds the smallest possible $\epsilon$,
 just a local minimum of $\epsilon$.
 This is consistent with the colloquial notion that solutions to the \kmeans ``can be found'',
-even when an optimal solution (an NP-hard problem) is not practically obtainable \cite{}.
+even when an optimal solution (an NP-hard problem) is not practically obtainable \cite{han2012data}.
 
 The most prevalent algorithm employed to identify valid solutions to the \kmeans is the Lloyd algorithm.
-For convenience, it is reproduced in \autoref{alg:lloyd};
+For convenience, it is reproduced in Algorithm~\ref{alg:lloyd};
 given its widespread use, we will only cover its most significant characteristics as they relate to our analysis.
 
 \begin{algorithm}[t]
@@ -54,9 +54,9 @@ given its widespread use, we will only cover its most significant characteristic
 	\begin{algorithmic}[1]
 		\State Initialize \( k \) cluster centers \( \{c_1, c_2, \dots, c_k\} \) arbitrarily from \( D \)
 		\Repeat
-		\label{algstep:assign}
 		\State \textcolor{gray}{// Assign \( x_i \) to the closest cluster}
-		\For{each object \( x_i \) in \( D \)}
+		\For{each object \( x_i \) in \( D \)} 
+		\label{algstep:assign}
 		\State \( C_j \leftarrow C_j \cup \{x_i\} \) where \( j = \underset{j}{\arg\min} \; d^2(x_i, c_j) \)
 		\EndFor
 		\State \textcolor{gray}{// Update cluster center \( c_j \)}
@@ -111,7 +111,7 @@ It is immediately evident that the quality of the bounds has a significant impac
 The larger (smaller) the lower (upper) bound is, the more likely an explicit distance evaluation can be avoided.
 
 While Elkan's algorithm also employs additional techniques to reduce the number of distance calculations, we want to focus on the calculation of the bounds here;
-a complete description of the algorithm is given in \autoref{alg:elkan}, as reproduced from \cite{}.
+a complete description of the algorithm is given in Algorithm~\ref{alg:elkan}, as reproduced from \cite{elkan}.
 
 The lower and upper bounds are calculated at the end of each iteration of Elkan's algorithm and are given by
 \begin{align}
