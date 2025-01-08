@@ -1,0 +1,5 @@
+- elaborate why execution time isn't helpful here
+- future work: execution time measurements
+- eq 2 typo: summand
+- fig 1: larger font, b/w readability
+- check if all criticism is included
