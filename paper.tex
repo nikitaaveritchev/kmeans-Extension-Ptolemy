@@ -100,25 +100,6 @@ The results of our preliminary performance evaluation are detailed in Section~\r
 \section{Preliminary Results}\label{sec: results}
 
 \input{content/5_results}
-
-
-\section{Conclusions and Future Work} \label{sec: conclusions}
-
-% This paper addresses efficient data clustering using the $k$-means algorithm.
-% We extend Elkan's algorithm with novel distance approximations derived from Ptolemy's inequality.
-% Preliminary evaluations show significant performance improvements over Elkan's method, particularly with large numbers of clusters at low-to-medium dimensionalities.
-% The application of Ptolemy's inequality opens new avenues for future work, potentially enhancing other k-means algorithms that use triangle inequality for distance pruning. This approach could make clustering algorithms more practical across a broader range of applications.
-
-This short paper has addressed the problem of efficient data clustering by means of the k-means algorithm.
-We have shown how to extend the more efficient clustering algorithm proposed by Elkan with novel distance approximations derived from Ptolemy's inequality.
-The results of our preliminary performance evaluation indicate that our proposal achieves significant improvements in performance compared to Elkan's algorithm. %Particularly noteworthy is the increased efficiency with a large number of clusters.
-
-Moreover, the use of the Ptolemy's inequality opens up new avenues for future work.
-Besides conducting more extensive experiments to verify our findings,
-it would be valuable to explore adaptations of this technique for other k-means algorithms and optimizations.
-In particular for algorithms which rely on the triangle inequality to prune distance calculations, Ptolemy's inequality can potentially be leveraged to achieve an enhancement in performance, making these clustering algorithms more practical for a broader range of applications.
-
-% \todo{Moreover, the use of Ptolemy’s inequality opens new avenues for future work. Exploring adaptations of this technique for other K-Means algorithms and optimizations could be highly valuable. In particular, algorithms that rely on the triangle inequality to prune distance calculations might leverage Ptolemy’s inequality to enhance performance, making these clustering algorithms more practical for a broader range of applications.}
-
+\input{content/6_conclusion.tex}
 \bibliography{references,bibliography_thesis,bibliography_iiwas}
 \end{document}

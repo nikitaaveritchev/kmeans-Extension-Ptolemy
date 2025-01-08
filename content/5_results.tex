@@ -32,15 +32,19 @@ The two real-world datasets include the Iris and Wine datasets \cite{pedregosa20
 The two synthetic datasets include Gaussian and uniformly randomly generated points, which are used to test for the effects of changing dataset dimensionality.
 
 \subsection{Experiments}
-\todo{If we claim to have implemented the classic k-means, we also have to show that in our plots.}
 Our variant of the k-Means algorithm is tested by implementing the classical k-Means algorithm (Lloyd's algorithm), Elkan's algorithm, and its novel, Ptolemy-based extension in Python.
-
-To provide a fair comparison of the algorithms,
-we measure the number of distance calculations instead of wall-clock time.
-As distance calculations account for the majority of computing time in k-Means algorithms, they offer a clear measure of efficiency regardless of implementational optimizations.
 
 Additionally, two intermediate variants were implemented to assess the separate effects of the lower and upper bounds:
 The \emph{Ptolemy Upper Bound} method uses Elkan's lower bound and Ptolemy's upper bound, while \emph{Ptolemy Lower Bound} uses Ptolemy's lower bound and Elkan's upper bound.
+
+To provide a fair comparison of the algorithms,
+we measure the number of distance calculations instead of wall-clock time.
+Distance calculations account for the majority of computing time in k-Means algorithms and do not depend on the implementation of the algorithms to machine code.
+In comparison, execution time measurements are contingent on a number of interacting factors that render them difficult to reproduce.
+These include the programming language and version, the amount and distribution of time spend on optimizing each algorithm's implementation, and the hardware architecture used to conduct the measurements.
+Thus, it takes considerable effort and care to make time measurements objective, reproducible, and comparable.
+Consequently, this short paper focuses on the theoretical, implementation-independent aspects of the discussed algorithms to determine whether a more extensive study is justified.
+
 
 Each algorithm is executed three times on each dataset, with the parameters $k = 3$, $k = 20$, and $k = 100$.
 
@@ -96,7 +100,7 @@ However, the Ptolemaic lower bound variant often struggles in these higher-dimen
 
 \textbf{Limitations.}
 The presented experiments are subject to three primary constraints:
-(i) While synthetic random datasets provide valuable best-case scenarios, more extensive real-world data with appropriate grouping structures is necessary for comprehensive evaluation.
+(i) While synthetic random datasets provide valuable best-case scenarios, more extensive real-world data with appropriate grouping structures is necessary for a comprehensive evaluation.
 (ii) The significant reduction in distance calculations may not directly translate to improved execution times, as Ptolemy's bounds are computationally more expensive than the triangle inequality.
 (iii) Most critically, the limited sample size and fixed initial conditions, particularly the lack of variation in cluster initializations, severely restrict the generalizability of individual measurements.
 
