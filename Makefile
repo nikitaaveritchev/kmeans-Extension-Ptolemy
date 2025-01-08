@@ -1,4 +1,4 @@
-TEX_DEPS := paper.tex content/* fig/* *.tex references.bib
+TEX_DEPS := paper.tex content/* fig/* *.tex references/*
 TEX_OPTIONS := --shell-escape -output-directory=build -interaction=nonstopmode -halt-on-error
 
 paper.pdf: $(TEX_DEPS)
@@ -14,3 +14,4 @@ all: paper.pdf
 .PHONY: clean
 clean:
 	rm -r build
+	rm -r paper.pdf
