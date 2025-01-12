@@ -32,7 +32,9 @@ class DataGenerator:
         labels = labels[permutation]
 
         return data, labels
-
+# This class mainly the elkan algorithm is derived and largely adapted from jjcordano's project (MIT License)
+# Original source: https://github.com/jjcordano/https://github.com/jjcordano/elkans_kmeans
+# new additions are the ptolemy algorithms
 class Kmeans:
     def __init__(self, k=2, max_iter=250, tolerance=0.000001, method='Elkan'):
         assert method in ['classic', 'Elkan', 'Ptolemy_upper', 'Ptolemy_lower', 'Ptolemy'], "Method argument not valid"
