@@ -17,3 +17,16 @@ This work explores the integration of **Ptolemy’s inequality**, a generalizati
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/kmeans-Extension-Ptolemy.git
+
+
+## License
+
+This project contains code under two licenses:
+
+1. **MIT License**: Portions of this project are derived from [jjcordano's project](https://github.com/jjcordano/elkans_kmeans), which is licensed under the MIT license. These portions remain under the MIT license.
+2. **CC BY 4.0**: All original contributions in this project are licensed under the Creative Commons Attribution 4.0 International License.
+
+### Attribution
+If using this project, please provide attribution for both:
+- The original work by [jjcordano](https://github.com/jjcordano/elkans_kmeans) under the MIT license.
+- This project under the CC BY 4.0 license.
