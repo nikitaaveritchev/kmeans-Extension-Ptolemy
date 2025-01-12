@@ -113,7 +113,7 @@ def plot_performance():
         ax.set_ylabel('Speedup')
 
     plt.tight_layout(rect=[0, 0, 0.9, 1])
-    plt.savefig('combined_plot_with_bigger_dataset_names.pdf', format='pdf')
+    plt.savefig('combined_plot.pdf', format='pdf')
     plt.show()
 
 
