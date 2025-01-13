@@ -65,8 +65,14 @@ def run_clustering(datasets, methods, k_values):
     return pd.DataFrame(results)
 
 
-def save_results(results, filename="results/results.xlsx"):
-    results.to_excel(filename, index=False)
+def save_results(
+    results, filename="results/clustering_performance_results_formatted.xlsx"
+):
+    dim_suffixes = ("_low", "_medium", "_high")
+    has_dims = results["Dataset"].str.endswith(dim_suffixes)
+    with pd.ExcelWriter(filename, engine="openpyxl") as writer:
+        results[~has_dims].to_excel(writer, sheet_name="Results1", index=False)
+        results[has_dims].to_excel(writer, sheet_name="Results2", index=False)
 
 
 def plot_performance():
