@@ -5,6 +5,7 @@ from sklearn.datasets import make_moons, make_circles, load_iris, load_wine
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from tqdm import tqdm
 
 def generate_datasets():
     datasets = {}
@@ -48,15 +49,19 @@ def generate_datasets():
 
 def run_clustering(datasets, methods, k_values):
     results = {"Dataset": [], "Method": [], "K": [], "Distance_Evaluations": []}
+    progress_bar = tqdm(total=len(datasets) * len(k_values) * len(methods))
     for name, data in datasets.items():
         for k in k_values:
             for method in methods:
+                progress_bar.set_postfix_str(f"{name}, k={k}, {method}")
                 model = Kmeans(k=k, method=method)
                 model.fit(data)
                 results["Dataset"].append(name)
                 results["Method"].append(method)
                 results["K"].append(k)
                 results["Distance_Evaluations"].append(model.distance_evaluations)
+
+                progress_bar.update()
     return pd.DataFrame(results)
 
 
