@@ -1,0 +1,21 @@
+[project]
+name = "kmeans-extension-ptolemy"
+version = "0.1.0"
+description = "Inceases the performance of Elkan's algorithm using Ptolemy's inequality."
+authors = [
+    {name = "Nikita Averitchev"},
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.10.0",
+    "numpy>=2.2.1",
+    "openpyxl>=3.1.5",
+    "pandas>=2.2.3",
+    "scikit-learn>=1.6.1",
+    "seaborn>=0.13.2",
+    "tqdm>=4.67.1",
+]
+
+[project.license]
+file = "CC-BY-LICENSE"
