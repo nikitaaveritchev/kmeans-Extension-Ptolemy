@@ -39,11 +39,11 @@ The \emph{Ptolemy Upper Bound} method uses Elkan's lower bound and Ptolemy's upp
 
 To provide a fair comparison of the algorithms,
 we measure the number of distance calculations instead of wall-clock time.
-Distance calculations account for the majority of computing time in k-Means algorithms and do not depend on the implementation of the algorithms to machine code.
+Distance calculations account for the majority of computing time in k-Means algorithms and do not depend on the specific machine-code implementation.
 In comparison, execution time measurements are contingent on a number of interacting factors that render them difficult to reproduce.
-These include the programming language and version, the amount and distribution of time spend on optimizing each algorithm's implementation, and the hardware architecture used to conduct the measurements.
+These include the programming language and version, the amount and distribution of time spend on optimizing each algorithm's implementation, and the hardware used to conduct such measurements.
 Thus, it takes considerable effort and care to make time measurements objective, reproducible, and comparable.
-Consequently, this short paper focuses on the theoretical, implementation-independent aspects of the discussed algorithms to determine whether a more extensive study is justified.
+Consequently, this short paper focuses only on the theoretical, implementation-independent aspects of the discussed algorithms to determine whether a more extensive study is justified.
 
 
 Each algorithm is executed three times on each dataset, with the parameters $k = 3$, $k = 20$, and $k = 100$.
@@ -77,17 +77,17 @@ In general, the full Ptolemaic extension shows substantial improvements in reduc
 
 \textbf{Number of Clusters.}
 The full Ptolemaic algorithm consistently demonstrates significant improvements over Elkan’s algorithm as the number of clusters $k$ increases.
-For instance, in the Gaussian low-dimensional dataset, the Ptolemaic algorithm achieves larger than 2-fold speedups for $k = 20$ and $k = 100$, illustrating its ability to significantly reduce distance calculations in complex clustering tasks.
+For instance, in the Gaussian low-dimensional dataset, the Ptolemaic algorithm achieves at least a 2-fold speedup for $k = 20$ and $k = 100$, illustrating its ability to significantly reduce distance calculations in complex clustering tasks.
 % surpasses 3-fold improvements for
 % Similar trends are observed in the Random low-dimensional dataset.
-For smaller cluster counts ($k = 3$), the advantage is less pronounced, with speedups around 1.1 in the Iris and Wine datasets.
-This suggests that Ptolemy's inequality offers significant improvements for larger values of $k$.
-However, lower-complexity clustering tasks may not benefit to the same extent,
+For smaller cluster counts ($k = 3$), the advantage is less pronounced: We see a significant difference in performance only in the low-dimensional Guassian dataset, while all other datasets show no significant increases or decreases.
+This suggests that Ptolemy's inequality offers significant improvements only for larger values of $k$.
+Lower-complexity clustering tasks might not benefit to the same extent,
 given the additional overhead imposed by the Ptolemaic bounds, which are computationally more complex to evaluate compared to the triangle bounds.
-The Ptolemaic Upper Bound variant performs comparably to the full Ptolemaic algorithm, especially for larger $k$ values.
-However, the Lower Bound variant underperforms in some cases, particularly with smaller cluster counts or in higher-dimensional datasets.
+The Ptolemaic Upper Bound variant performs roughly similar to the full Ptolemaic algorithm.
+In comparison, the Lower Bound variant has comparable or worse performance to Elkan.
 
-\textbf{Dimensionality.} The full Ptolemaic algorithm performs well across varying dataset dimensionality. In low-dimensional datasets (10 dimensions), it achieves impressive speedups, particularly at higher cluster counts.
+\textbf{Dimensionality.} The full Ptolemaic algorithm performs reasonably well across varying dataset dimensionality. In low-dimensional datasets (10 dimensions), it achieves impressive speedups, particularly at higher cluster counts.
 As dimensionality increases, performance gains persist but become slightly less pronounced.
 Nonetheless, even in higher-dimensional datasets, the full Ptolemaic algorithm remains effective, consistently reducing distance evaluations.
 However, the Ptolemaic lower bound variant often struggles in these higher-dimensional cases, further emphasizing the robustness of the full Ptolemaic approach.
