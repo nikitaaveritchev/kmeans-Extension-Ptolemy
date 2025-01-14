@@ -23,9 +23,9 @@ results/combined_plot.pdf results/clustering_performace_results_formatted.xlsx p
 	.venv/bin/pip install -r requirements.txt
 	
 clean:
-	rm -r results
-	rm -r paper/build
-	rm -r .venv
-	rm -r paper/fig/combined_plot.pdf
+	-rm -r results
+	-rm -r paper/build
+	-rm -r .venv
+	-rm -r paper/fig/combined_plot.pdf
 	
 .PHONY: clean all code
