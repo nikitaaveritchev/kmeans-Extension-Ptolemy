@@ -1,6 +1,7 @@
 all: paper.pdf
 code: results/combined_plot.pdf
 
+
 TEX_DEPS := paper/paper.tex paper/content/* paper/*.tex paper/references/*
 TEX_OPTIONS := --shell-escape -output-directory=build -interaction=nonstopmode -halt-on-error
 
@@ -29,3 +30,4 @@ clean:
 	-rm -r paper/fig/combined_plot.pdf
 	
 .PHONY: clean all code
+
