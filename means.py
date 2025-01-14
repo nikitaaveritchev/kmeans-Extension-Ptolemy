@@ -85,7 +85,7 @@ class Kmeans:
 
             prevCentroids = dict(self.centroids)
 
-            for classification in self.classifications:
+            for classification in sorted(self.classifications.keys()):
                 if len(self.classifications[classification]) > 0:
                     self.centroids[classification] = np.average(self.classifications[classification], axis=0)
 
@@ -96,7 +96,7 @@ class Kmeans:
                 if abs(np.sum((current_centroid - original_centroid) / original_centroid * 100.0)) > self.tol:
                     optimized = False
             if optimized:
-                for centroid in self.pointsClassif:
+                for centroid in sorted(self.pointsClassif.keys()):
                     for point in self.pointsClassif[centroid]:
                         self.labels[point] = centroid
                 break
@@ -119,7 +119,7 @@ class Kmeans:
         prevCentroids = dict(self.centroids)
         prevPointsClassif = dict(self.pointsClassif)
         
-        for classification in self.classifications:
+        for classification in sorted(self.classifications.keys()):
             if len(self.classifications[classification]) > 0:
                 self.centroids[classification] = np.average(self.classifications[classification], axis=0)
 
@@ -134,15 +134,15 @@ class Kmeans:
                 optimized = False
 
         if optimized:
-            for centroid in self.pointsClassif:
+            for centroid in sorted(self.pointsClassif.keys()):
                 for point in self.pointsClassif[centroid]:
                     self.labels[point] = centroid
             return
 
-        for centroid in self.pointsClassif:
+        for centroid in sorted(self.pointsClassif.keys()):
             for i in range(pointsArray.shape[0]):
                 lowerBounds[i][centroid] -= centroidDistanceChange[centroid]
-            for i in self.pointsClassif[centroid]:
+            for i in sorted(self.pointsClassif[centroid]):
                 upperBounds[i] += centroidDistanceChange[centroid]
 
         for it in range(self.max_iter):
@@ -156,8 +156,8 @@ class Kmeans:
                 centroidDistances[i] = [np.linalg.norm(self.centroids[i] - self.centroids[c_prime]) for c_prime in self.centroids]
                 closestCentroidDistances[i] = min(centroidDistances[i][:i] + centroidDistances[i][i + 1:])
 
-            for centroid in prevPointsClassif:
-                for i in prevPointsClassif[centroid]:
+            for centroid in sorted(prevPointsClassif.keys()):
+                for i in sorted(prevPointsClassif[centroid]):
                     r = True
                     distToCurrentCentroid = upperBounds[i]
 
@@ -182,7 +182,7 @@ class Kmeans:
             prevCentroids = dict(self.centroids)
             prevPointsClassif = dict(self.pointsClassif)
             
-            for classification in self.classifications:
+            for classification in sorted(self.classifications.keys()):
                 if len(self.classifications[classification]) > 0:
                     self.centroids[classification] = np.average(self.classifications[classification], axis=0)
 
@@ -198,13 +198,13 @@ class Kmeans:
             if optimized:
                 break
 
-            for centroid in self.pointsClassif:
+            for centroid in sorted(self.pointsClassif.keys()):
                 for i in range(pointsArray.shape[0]):
                     lowerBounds[i][centroid] -= centroidDistanceChange[centroid]
-                for i in self.pointsClassif[centroid]:
+                for i in sorted(self.pointsClassif[centroid]):
                     upperBounds[i] += centroidDistanceChange[centroid]
 
-        for centroid in self.pointsClassif:
+        for centroid in sorted(self.pointsClassif.keys()):
             for point in self.pointsClassif[centroid]:
                 self.labels[point] = centroid
 
@@ -227,7 +227,7 @@ class Kmeans:
         prevCentroids = dict(self.centroids)
         prevPointsClassif = dict(self.pointsClassif)
 
-        for classification in self.classifications:
+        for classification in sorted(self.classifications.keys()):
             if len(self.classifications[classification]) > 0:
                 self.centroids[classification] = np.average(self.classifications[classification], axis=0)
 
@@ -241,7 +241,7 @@ class Kmeans:
             if abs(np.sum((current_centroid - original_centroid) / original_centroid * 100.0)) > self.tol:
                 optimized = False
         if optimized:
-            for centroid in self.pointsClassif:
+            for centroid in sorted(self.pointsClassif.keys()):
                 for point in self.pointsClassif[centroid]:
                     self.labels[point] = centroid
             return
@@ -251,10 +251,10 @@ class Kmeans:
         prevDistanceChange = centroidDistanceChange.copy()
         oldPrevCentroids = prevCentroids.copy()
 
-        for centroid in self.pointsClassif:
+        for centroid in sorted(self.pointsClassif.keys()):
             for i in range(pointsArray.shape[0]):
                 lowerBounds[i][centroid] -= centroidDistanceChange[centroid]
-            for i in self.pointsClassif[centroid]:
+            for i in sorted(self.pointsClassif[centroid]):
                 upperBounds[i] += centroidDistanceChange[centroid]
 
         for it in range(self.max_iter):
@@ -268,8 +268,8 @@ class Kmeans:
                 centroidDistances[i] = [np.linalg.norm(self.centroids[i] - self.centroids[c_prime]) for c_prime in self.centroids]
                 closestCentroidDistances[i] = min(centroidDistances[i][:i] + centroidDistances[i][i + 1:])
 
-            for centroid in prevPointsClassif:
-                for i in prevPointsClassif[centroid]:
+            for centroid in sorted(prevPointsClassif.keys()):
+                for i in sorted(prevPointsClassif[centroid]):
                     r = True
                     distToCurrentCentroid = upperBounds[i]
 
@@ -294,7 +294,7 @@ class Kmeans:
             prevCentroids = dict(self.centroids)
             prevPointsClassif = dict(self.pointsClassif)
 
-            for classification in self.classifications:
+            for classification in sorted(self.classifications.keys()):
                 if len(self.classifications[classification]) > 0:
                     self.centroids[classification] = np.average(self.classifications[classification], axis=0)
 
@@ -317,10 +317,10 @@ class Kmeans:
                 current_centroid = self.centroids[centroid]
                 oldCentroidDistanceChange[centroid] = np.linalg.norm(old_centroid - current_centroid)
 
-            for centroid in self.pointsClassif:
+            for centroid in sorted(self.pointsClassif.keys()):
                 for i in range(pointsArray.shape[0]):
                     lowerBounds[i][centroid] = max(0, lowerBounds[i][centroid] - centroidDistanceChange[centroid])
-                for i in self.pointsClassif[centroid]:
+                for i in sorted(self.pointsClassif[centroid]):
                     if prevDistanceChange[centroid] != 0:
 
                         upperBounds[i] = (upperBounds[i] * oldCentroidDistanceChange[centroid] + oldUpperBounds[i] * centroidDistanceChange[centroid]) / prevDistanceChange[centroid]
@@ -333,7 +333,7 @@ class Kmeans:
             prevDistanceChange = centroidDistanceChange.copy()
             oldPrevCentroids = self.centroids.copy()
 
-        for centroid in self.pointsClassif:
+        for centroid in sorted(self.pointsClassif.keys()):
             for point in self.pointsClassif[centroid]:
                 self.labels[point] = centroid
 
@@ -355,7 +355,7 @@ class Kmeans:
         prevCentroids = dict(self.centroids)
         prevPointsClassif = dict(self.pointsClassif)
 
-        for classification in self.classifications:
+        for classification in sorted(self.classifications.keys()):
             if len(self.classifications[classification]) > 0:
                 self.centroids[classification] = np.average(self.classifications[classification], axis=0)
 
@@ -369,7 +369,7 @@ class Kmeans:
             if abs(np.sum((current_centroid - original_centroid) / original_centroid * 100.0)) > self.tol:
                 optimized = False
         if optimized:
-            for centroid in self.pointsClassif:
+            for centroid in sorted(self.pointsClassif.keys()):
                 for point in self.pointsClassif[centroid]:
                     self.labels[point] = centroid
             return
@@ -379,10 +379,10 @@ class Kmeans:
         prevDistanceChange = centroidDistanceChange.copy()
         oldPrevCentroids = prevCentroids.copy()
 
-        for centroid in self.pointsClassif:
+        for centroid in sorted(self.pointsClassif.keys()):
             for i in range(pointsArray.shape[0]):
                 lowerBounds[i][centroid] -= centroidDistanceChange[centroid]
-            for i in self.pointsClassif[centroid]:
+            for i in sorted(self.pointsClassif[centroid]):
                 upperBounds[i] += centroidDistanceChange[centroid]
 
         for it in range(self.max_iter):
@@ -396,8 +396,8 @@ class Kmeans:
                 centroidDistances[i] = [np.linalg.norm(self.centroids[i] - self.centroids[c_prime]) for c_prime in self.centroids]
                 closestCentroidDistances[i] = min(centroidDistances[i][:i] + centroidDistances[i][i + 1:])
 
-            for centroid in prevPointsClassif:
-                for i in prevPointsClassif[centroid]:
+            for centroid in sorted(prevPointsClassif.keys()):
+                for i in sorted(prevPointsClassif[centroid]):
                     r = True
                     distToCurrentCentroid = upperBounds[i]
 
@@ -422,7 +422,7 @@ class Kmeans:
             prevCentroids = dict(self.centroids)
             prevPointsClassif = dict(self.pointsClassif)
 
-            for classification in self.classifications:
+            for classification in sorted(self.classifications.keys()):
                 if len(self.classifications[classification]) > 0:
                     self.centroids[classification] = np.average(self.classifications[classification], axis=0)
 
@@ -445,7 +445,7 @@ class Kmeans:
                 current_centroid = self.centroids[centroid]
                 oldCentroidDistanceChange[centroid] = np.linalg.norm(old_centroid - current_centroid)
 
-            for centroid in self.pointsClassif:
+            for centroid in sorted(self.pointsClassif.keys()):
                 for i in range(pointsArray.shape[0]):
                     if prevDistanceChange[centroid] != 0:
                         lowerbound1 = (oldLowerBounds[i][centroid] * centroidDistanceChange[centroid] - upperBounds[i]*oldCentroidDistanceChange[centroid])/ prevDistanceChange[centroid]
@@ -456,7 +456,7 @@ class Kmeans:
                             lowerBounds[i][centroid] = max(lowerbound1, lowerbound2)
                     else:
                         lowerBounds[i][centroid] = max(0, lowerBounds[i][centroid] - centroidDistanceChange[centroid])
-                for i in self.pointsClassif[centroid]:
+                for i in sorted(self.pointsClassif[centroid]):
                     upperBounds[i] += centroidDistanceChange[centroid]
 
 
@@ -465,7 +465,7 @@ class Kmeans:
             prevDistanceChange = centroidDistanceChange.copy()
             oldPrevCentroids = self.centroids.copy()
 
-        for centroid in self.pointsClassif:
+        for centroid in sorted(self.pointsClassif.keys()):
             for point in self.pointsClassif[centroid]:
                 self.labels[point] = centroid
 
@@ -487,7 +487,7 @@ class Kmeans:
         prevCentroids = dict(self.centroids)
         prevPointsClassif = dict(self.pointsClassif)
 
-        for classification in self.classifications:
+        for classification in sorted(self.classifications.keys()):
             if len(self.classifications[classification]) > 0:
                 self.centroids[classification] = np.average(self.classifications[classification], axis=0)
 
@@ -501,7 +501,7 @@ class Kmeans:
             if abs(np.sum((current_centroid - original_centroid) / original_centroid * 100.0)) > self.tol:
                 optimized = False
         if optimized:
-            for centroid in self.pointsClassif:
+            for centroid in sorted(self.pointsClassif.keys()):
                 for point in self.pointsClassif[centroid]:
                     self.labels[point] = centroid
             return
@@ -511,10 +511,10 @@ class Kmeans:
         prevDistanceChange = centroidDistanceChange.copy()
         oldPrevCentroids = prevCentroids.copy()
 
-        for centroid in self.pointsClassif:
+        for centroid in sorted(self.pointsClassif.keys()):
             for i in range(pointsArray.shape[0]):
                 lowerBounds[i][centroid] -= centroidDistanceChange[centroid]
-            for i in self.pointsClassif[centroid]:
+            for i in sorted(self.pointsClassif[centroid]):
                 upperBounds[i] += centroidDistanceChange[centroid]
 
         for it in range(self.max_iter):
@@ -528,8 +528,8 @@ class Kmeans:
                 centroidDistances[i] = [np.linalg.norm(self.centroids[i] - self.centroids[c_prime]) for c_prime in self.centroids]
                 closestCentroidDistances[i] = min(centroidDistances[i][:i] + centroidDistances[i][i + 1:])
 
-            for centroid in prevPointsClassif:
-                for i in prevPointsClassif[centroid]:
+            for centroid in sorted(prevPointsClassif.keys()):
+                for i in sorted(prevPointsClassif[centroid]):
                     r = True
                     distToCurrentCentroid = upperBounds[i]
 
@@ -554,7 +554,7 @@ class Kmeans:
             prevCentroids = dict(self.centroids)
             prevPointsClassif = dict(self.pointsClassif)
 
-            for classification in self.classifications:
+            for classification in sorted(self.classifications.keys()):
                 if len(self.classifications[classification]) > 0:
                     self.centroids[classification] = np.average(self.classifications[classification], axis=0)
 
@@ -577,7 +577,7 @@ class Kmeans:
                 current_centroid = self.centroids[centroid]
                 oldCentroidDistanceChange[centroid] = np.linalg.norm(old_centroid - current_centroid)
 
-            for centroid in self.pointsClassif:
+            for centroid in sorted(self.pointsClassif.keys()):
                 for i in range(pointsArray.shape[0]):
                     if prevDistanceChange[centroid] != 0:
                         lowerbound1 = (oldLowerBounds[i][centroid] * centroidDistanceChange[centroid] - upperBounds[i]*oldCentroidDistanceChange[centroid])/ prevDistanceChange[centroid]
@@ -588,7 +588,7 @@ class Kmeans:
                             lowerBounds[i][centroid] = max(lowerbound1, lowerbound2)
                     else:
                         lowerBounds[i][centroid] = max(0, lowerBounds[i][centroid] - centroidDistanceChange[centroid])
-                for i in self.pointsClassif[centroid]:
+                for i in sorted(self.pointsClassif[centroid]):
                     if prevDistanceChange[centroid] != 0:
                        
                         upperBounds[i] = (upperBounds[i] * oldCentroidDistanceChange[centroid] + oldUpperBounds[i] * centroidDistanceChange[centroid]) / prevDistanceChange[centroid]
@@ -602,6 +602,6 @@ class Kmeans:
             prevDistanceChange = centroidDistanceChange.copy()
             oldPrevCentroids = self.centroids.copy()
 
-        for centroid in self.pointsClassif:
+        for centroid in sorted(self.pointsClassif.keys()):
             for point in self.pointsClassif[centroid]:
                 self.labels[point] = centroid
