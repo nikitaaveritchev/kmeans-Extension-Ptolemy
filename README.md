@@ -28,8 +28,8 @@ You might be able to use older version of the listed software, but we cannot gua
 
 This project contains code under two licenses:
 
-1. **MIT License**: Portions of this project are derived from [jjcordano's project](https://github.com/jjcordano/elkans_kmeans), which is licensed under the MIT license. These portions remain under the MIT license.
-2. **CC BY 4.0**: All original contributions in this project are licensed under the Creative Commons Attribution 4.0 International License.
+1. **CC BY 4.0**: All original contributions in this project are licensed under the Creative Commons Attribution 4.0 International License.
+2. **MIT License**: Portions of this project are derived from [jjcordano's project](https://github.com/jjcordano/elkans_kmeans), which is licensed under the MIT license. These portions remain under the MIT license.
 
 ### Attribution
 If using this project, please provide attribution for both:
