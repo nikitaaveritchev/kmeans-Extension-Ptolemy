@@ -4,9 +4,10 @@ version = "0.1.0"
 description = "Inceases the performance of Elkan's algorithm using Ptolemy's inequality."
 authors = [
     {name = "Nikita Averitchev"},
+    {name = "Max Pernklau"},
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
     "matplotlib>=3.10.0",
     "numpy>=2.2.1",
