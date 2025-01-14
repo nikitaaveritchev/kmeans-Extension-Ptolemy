@@ -14,6 +14,9 @@ This work explores the integration of **Ptolemy’s inequality**, a generalizati
 
 ## How to Use
 
+0. Install prerequisites:
+Building this paper requires python 3.13.1, lualatex 1.18.0, and GNU Make 4.4.1. It optionally requires qpdf 11.9.1 to linearize the resulting paper. You might be able to use older version of python, lualatex, etc., but we cannot guarantee compatibility or identical outputs. The code was run and paper created on Linux 6.12.8.
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/kmeans-Extension-Ptolemy.git
