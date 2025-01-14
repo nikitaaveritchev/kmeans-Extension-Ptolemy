@@ -3,8 +3,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-def plot(file_path="results/clustering_performance_results_formatted.xlsx"):
-    data = pd.ExcelFile(file_path)
+def plot(
+    input_file="results/clustering_performance_results_formatted.xlsx",
+    output_file="results/combined_plot.pdf",
+):
+    data = pd.ExcelFile(input_file)
     df = pd.concat(
         [
             data.parse("Results1"),
@@ -17,13 +20,17 @@ def plot(file_path="results/clustering_performance_results_formatted.xlsx"):
     df = df[~df.Dataset.isin(["Circles", "Moons"])]
 
     # Function to calculate speedup
+    metric = "Distance_Evaluations"
+
     def calculate_speedup(group):
-        reference = group[group["Method"] == "Elkan"]["Distance_Evaluations"].values[0]
-        group["Speedup"] = reference / group["Distance_Evaluations"]
+        reference = group[group["Method"] == "Elkan"][metric].values[0]
+        group["Speedup"] = reference / group[metric]
         return group
 
     all_speedups = (
-        df.groupby(["Dataset", "K"]).apply(calculate_speedup).reset_index(drop=True)
+        df.groupby(["Dataset", "K"])[df.columns]
+        .apply(calculate_speedup)
+        .reset_index(drop=True)
     )
     speedups = all_speedups[
         all_speedups.Method.isin(["Ptolemy_upper", "Ptolemy_lower", "Ptolemy"])
@@ -91,6 +98,7 @@ def plot(file_path="results/clustering_performance_results_formatted.xlsx"):
             ax=axis,
             **plt_kwargs,
         )
+        axis.grid(visible=True, axis="y")
         axis.set_xlabel("$k$")
         axis.set_title(name.replace("_", ", "))
 
@@ -117,4 +125,9 @@ def plot(file_path="results/clustering_performance_results_formatted.xlsx"):
         yticks.sort()
         axis.set_yticks(yticks)
 
-    plt.savefig("results/combined_plot.pdf", format="pdf")
+    plt.savefig(output_file, format="pdf")
+
+
+if __name__ == "__main__":
+    print("Producing plot")
+    plot()
