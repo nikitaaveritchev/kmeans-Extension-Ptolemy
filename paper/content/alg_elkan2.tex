@@ -1,0 +1,34 @@
+\begin{algorithm}[h]
+	\caption{Elkan's Algorithm}
+	\label{alg:elkan}
+	\begin{algorithmic}
+		\State \textbf{Initialization:} Initialize all cluster centers. For each point $x_i$ and each center $c_j$, set the lower bound $l(x_i,c_j)$ and the upper bound $u(x_i)$. Assign each $x_i$ to the nearest cluster $C_j$ such that $c(x_i) = \argmin_j d(x_i, c_j)$, utilizing that
+		$ d(c_j, c_m) \geq 2d(x_i, c_j) \Rightarrow d(x_i, c_m) \geq d(x_i, c_j) $
+		to minimize distance calculations. Set $r(x_i) = \text{true}$ for all points.
+
+		\Repeat
+		\State \textbf{Step 1:} Compute distances $d(c_i, c_j)$ between all centers, and calculate $s(c_i) = \frac{1}{2} \min_{c_j \neq c_i} d(c_i, c_j)$ for each center $c_i$.
+
+		\State \textbf{Step 2:} Retain points $x_i$ in their current clusters if $u(x_i) \leq s(c(x_i))$.
+
+		\State \textbf{Step 3:} For remaining points, consider $x_i$ for reassignment if:
+		\begin{itemize}[leftmargin=5em,itemindent=\algorithmicindent,itemsep=0pt,parsep=0pt]
+			\item $c_j \neq c(x_i)$,
+			\item $u(x_i) > l(x_i, c_j)$, and
+			\item $u(x_i) > 0.5 \cdot d(c(x_i), c_j)$.
+		\end{itemize}
+
+		\State \textbf{Step 3a:} If $r(x_i)$ is true, compute $d(x_i, c(x_i))$. Set $r(x_i) = \text{false}$. Otherwise, $u(x_i) = d(x_i, c(x_i))$.
+
+		\State \textbf{Step 3b:} If $d(x_i, c(x_i)) > l(x_i, c_j)$ or $d(x_i, c(x_i)) > \frac{1}{2}d(c(x_i), c_j)$, compute $d(x_i, c_j)$. Reassign $x_i$ to $C_j$ if $d(x_i, c_j) < d(x_i, c(x_i))$.
+
+		\State \textbf{Step 4:} Compute the cluster centers as the centroids of the corresponding clusters $c'_j$.
+
+		\State \textbf{Step 5:} Update lower bounds $l(x_i, c_j)$ for each $x_i$ and $c_j$ using Eq.~\ref{eq:elkan_lower}.
+		\State \textbf{Step 6:} Update upper bounds $u(x_i)$ for each $x_i$ using Eq.~\ref{eq:elkan_upper}. Reset $r(x_i) = \text{true}$
+
+		\State \textbf{Step 7:} Replace each center $c_j$ with $c'_j$.
+		\Until{convergence}
+	\end{algorithmic}
+\end{algorithm}
+

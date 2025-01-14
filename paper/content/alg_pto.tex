@@ -1,0 +1,39 @@
+\todo{elkan's alg. changed to inlcude Pto LBs. too large to include in the paper}
+\begin{algorithm}
+	\caption{Elkan's Algorithm extended with Ptolemy's inequality}
+	\label{alg:ptolemy}
+
+	\begin{algorithmic}
+
+		\State \textbf{Initialization:} Initialize all cluster centers. For each point $x_i$ and each center $c_j$, set the lower bound $l(x_i,c_j)$ and the upper bound $u(x_i)$. Assign each $x_i$ to the nearest cluster $C_j$ such that $c(x_i) = \arg \min_j d(x_i, c_j)$, utilizing Lemma 1 to minimize distance calculations. Set $r(x_i) = \text{true}$ for all points.
+
+		\State \textbf{Step 0:} Compute one iteration of Elkan's algorithm. Save old upper and lower bounds of the last two iterations.
+		\Repeat
+		\State \textbf{Step 1:}  Compute distances $d(c_i, c_j)$ between all centers, and calculate $s(c_i) = \frac{1}{2} \min_{c_j \neq c_i} d(c_i, c_j)$ for each center $c_i$.
+		\Statex
+		\State \textbf{Step 2:}  Retain points $x_i$ in their current clusters if $u(x_i) \leq s(c(x_i))$.
+		\Statex
+		\State \textbf{Step 3:}  For remaining points, consider $x_i$ for reassignment if:
+		\begin{itemize}
+			\item $c_j \neq c(x_i)$,
+			\item $u(x_i) > l(x_i, c_j)$, and
+			\item $u(x_i) > \frac{1}{2}d(c(x_i), c_j)$.
+		\end{itemize}
+		\Statex
+		\State \textbf{Step 3a:}  If $r(x_i)$ is true, compute $d(x_i, c(x_i))$. Set $r(x_i) = \text{false}$. Otherwise, $u(x_i) =d(x_i, c(x_i))$
+		\Statex
+		\State \textbf{Step 3b:} If $d(x_i, c(x_i)) > l(x_i, c_j)$ or $d(x_i, c(x_i)) > \frac{1}{2}d(c(x_i), c_j)$, compute $d(x_i, c_j)$. Reassign $x_i$ to $C_j$ if $d(x_i, c_j) < d(x_i, c(x_i))$.
+		\Statex
+		\State \textbf{Step 4:} Compute the cluster centers as the centroids of the corresponding clusters $c'_j$.
+		\Statex
+		\State \textbf{Step 5:} If distance between two older cluster is not 0. Update lower bounds by using equation \ref{eq4.8}. Otherwise, update like in Elkan. Save the old lower bounds of the two last iterations.
+		\Statex
+		\State \textbf{Step 6:} If distance between two older cluster is not 0. Update upper bounds by using equation \ref{eq4.7}. Otherwise, update like in Elkan. Reset $r(x_i) = \text{true}$. Save old cluster and upper bounds of the last two iterations.
+		\Statex
+		\State \textbf{Step 7:} Replace each center $c_j$ with $c'_j$.
+
+		\Until{convergence}
+
+	\end{algorithmic}
+\end{algorithm}
+

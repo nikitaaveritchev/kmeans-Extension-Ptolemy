@@ -1,0 +1,129 @@
+\newcommand{\kmeans}{$k$-means problem\xspace}
+
+\section{Preliminaries}\label{Preliminaries}
+
+In this section, we first define the $k$-means clustering problem and the Lloyd algorithm as a straightforward, but optimizable solution to this problem in Section \ref{subsec: kmeans}.
+We then continue with the introduction of means of acceleration trough lower and upper bounding in Section \ref{sub:acc}.
+
+
+\subsection{The \kmeans} \label{subsec: kmeans}
+
+In order to discuss the \kmeans, we first define the concept of a \emph{clustering algorithm} in a formal and implementation-agnostic manner:
+\begin{definition}[clustering algorithm]
+	Given a target number of clusters $k \in \mathbb{N}$, a clustering algorithm is a function $F$ that assigns each element from an input data set $D\subset \mathbb{R}^n$ a
+	cluster index $i \in \{1, 2, \ldots, k\}$
+	$$ F:D \to \{1, 2, \ldots, k\} \;.$$
+\end{definition}
+The intention is to assign similar objects the same index, thus clustering them together.
+Notably, we restrict our analysis to clustering problems that use the $n$-dimensional Euclidean space as the domain of the input data set.
+Likewise, we assume that the dissimilarity of the data points to be clustered is completely described by the Euclidean distance $d(x,y)= || x-y ||_2 $.
+The rationale behind this assumption will be made clear shortly in Section \ref{sub:acc}.
+
+The core of the \kmeans, then, is the assignment of clusters so that the variance in dissimilarity between all points in the same cluster should be reasonably small.
+More formally:
+\begin{definition}[\kmeans]
+	Let $F$ be a clustering algorithm
+	%$x \in D$ be an element from the input data set of a clustering algorithm $F$
+	and $C_i$ be the set of all elements assigned to cluster $i$:
+	$$ C_i = \{x \in D \mid F(x) = i\} \,.$$
+	Furthermore, let $\epsilon$ be the weighted sum of inter-cluster variances
+	$$ \epsilon = \sum_{i=1}^k |C_i| \operatorname{Var}[C_i] = \sum_{i=1}^k \sum_{x_j \in C_i}  d^2(x_j, c_i)\,, $$
+	where the cluster's average element $c_i = \operatorname{E}[C_i]$ is called the center of the cluster $C_i$.
+
+	Then, the map $F$ is called a solution to the \kmeans
+	iff $\epsilon$ cannot be made smaller by changing the assignment of any one element to a different cluster.
+\end{definition}
+Note that with this definition, common $k$-means algorithms provide solutions to this \kmeans,
+as we do not require that $F$ achieves the smallest possible $\epsilon$,
+just a local minimum of $\epsilon$.
+This is consistent with the colloquial notion that solutions to the \kmeans ``can be found'',
+even when an optimal solution (an NP-hard problem) is not practically obtainable \cite{han2012data}.
+
+The most prevalent algorithm employed to identify valid solutions to the \kmeans is the Lloyd algorithm \cite{DBLP:journals/tit/Lloyd82}, which is reproduced in Algorithm~\ref{alg:lloyd};
+given its widespread use, we will only cover its most significant characteristics as they relate to our analysis.
+
+\begin{algorithm}[t]
+	\caption{k-Means Algorithm}
+	\label{alg:lloyd}
+
+	\textbf{Input:} \( k \): Number of clusters, \( D \): Dataset containing \( n \) objects
+
+	\textbf{Output:} Assignment of each $x_i \in D$ to a clusters
+
+	\begin{algorithmic}[1]
+		\State Initialize \( k \) cluster centers \( \{c_1, c_2, \dots, c_k\} \) arbitrarily from \( D \)
+		\Repeat
+		\State \textcolor{gray}{// Assign \( x_i \) to the closest cluster}
+		\For{each object \( x_i \) in \( D \)} 
+		\label{algstep:assign}
+		\State \( C_j \leftarrow C_j \cup \{x_i\} \) where \( j = \underset{j}{\arg\min} \; d^2(x_i, c_j) \)
+		\EndFor
+		\State \textcolor{gray}{// Update cluster center \( c_j \)}
+		\For{each cluster \( C_j \)}
+		\State \( c_j \leftarrow \frac{1}{|C_j|} \sum_{x_i \in C_j} x_i \)
+		\EndFor
+		\Until{no change in cluster assignments}
+	\end{algorithmic}
+\end{algorithm}
+
+For each iteration of Lloyd's algorithm, the assignment step (line~\autoref{algstep:assign}) needs to identify the closest cluster center $c_j$ for each element $x_i$ from the input dataset $D$.
+To do so, Lloyd's algorithm calculates the distances between each cluster and each element from $D$, requiring $k\cdot|D|$ total distance evaluations per iteration.
+These frequent distance evaluations can make up a significant share of the algorithms computational costs, especially for high-dimensional datasets.
+
+
+\subsection{Accelerating $k$-means}
+\label{sub:acc}
+
+\input{content/alg_elkan2.tex}
+
+As we have seen, Lloyd's algorithm requires numerous evaluations of the distance function.
+However, the exact distances do not actually need to be calculated explicitly for every element, as it is sufficient to identify which cluster center is the closest to a given element.
+This is often possible from geometric considerations alone, when lower and upper distance bounds are available.
+Two properties of the Euclidean space are of particular use here:
+The triangle inequality
+\begin{align}
+	\label{eq:tri}
+	d(x,y) \leq d(x,z) + d(z,y)
+\end{align}
+and Ptolemy's inequality
+\begin{align}
+	\label{eq:pto}
+	d(x, y)\cdot d(v, u) \leq d(x, v) \cdot d(y,u) + d(x, u) \cdot d(y, v)\;.
+\end{align}
+Both inequalities, known since ancient times, provide lower and upper bounds on the distances between two points given two (respectively five) other distances.
+
+Numerous algorithms have been developed that exploit the former inequality to avoid explicit distance evaluations. However, to the best of our knowledge, the latter has not been employed for the purposes of accelerating $k$-means clustering yet.
+
+To demonstrate the potential of the latter, we modify Elkan's algorithm \cite{DBLP:conf/icml/Elkan03} that already employs the triangle inequality, to also make use of Ptolemy's inequality.
+We provide a short summary of Elkan's algorithm here and describe our extension in Section \ref{sec:contrib}.
+
+Elkan's algorithm maintains two kinds of distance bounds in each iteration of the algorithm:
+\begin{enumerate}[label=\roman*]
+	\item $u(x) \geq d(x, c_i) \mid i = F(x)$,
+	      upper bounds between data points and their currently assigned centers.
+	\item $l(x, c_i) \leq d(x,c_i) \forall i \neq F(x)$,
+	      lower bounds between points and all other centers.
+\end{enumerate}
+Intuitively, when the upper bound is larger than all lower bounds $u(x)\geq l(x,c_i) \forall i\neq F(x)$, the cluster assignment of a data point has not changed.
+Explicit distances to other clusters are only required when this inequality does not hold, i.e. when the bounds are not tight enough or when the cluster assignment of the data point has indeed changed.
+It is immediately evident that the quality of the bounds has a significant impact on the achievable improvements in execution speed:
+The larger (smaller) the lower (upper) bound is, the more likely an explicit distance evaluation can be avoided.
+
+While Elkan's algorithm also employs additional techniques to reduce the number of distance calculations, we want to focus on the calculation of the bounds here;
+a complete description of the algorithm is given in Algorithm~\ref{alg:elkan}, as reproduced from \cite{DBLP:conf/icml/Elkan03}.
+
+The lower and upper bounds are calculated at the end of each iteration of Elkan's algorithm and are given by
+\begin{align}
+	\label{eq:elkan_lower}
+	l'(x_i, c_j) & = \max \{ l(x_i, c_j) - d(c'_j, c_j), 0 \} \\
+	\label{eq:elkan_upper}
+	u'(x_i)      & = u(x_i) + d(c'(x_i), c(x_i)) \,,
+\end{align}
+where the prime symbol ($c'_j, u', l'$) indicates quantities calculated in this iteration, while unprimed variables refer to quantities calculated in the preceding iteration.
+The given equations for the bounds follow directly from the triangle inequality~\ref{eq:tri}.
+
+The calculation of these bounds entails an overhead of $\mathrm{O}(k^2)$ distance calculations per iteration.
+However, this additional cost tends to be small compared to the number of distance calculations $\mathrm{O}(k\cdot|D|)$ that can potentially saved,
+as  $k \ll |D|$ in most practical applications.
+
+

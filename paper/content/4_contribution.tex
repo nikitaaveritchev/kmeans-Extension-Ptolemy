@@ -1,0 +1,80 @@
+\newcommand{\prev}{\diamond}
+
+\section{Applying Ptolemy's Inequality to the Elkan's Algorithm}
+\label{sec:contrib}
+
+As seen in the previous section,
+Elkan's algorithm can improve the execution speed of $k$-means clustering through the use of the triangle inequality.
+Explicit distance calculations are avoided when tight upper and lower bounds of the distance function are available.
+
+In this section, we use Ptolemy's inequality to calculate an additional set of bounds and modify Elkan's algorithm accordingly.
+These Ptolemaic bounds often improve upon the triangular bounds, leading to increased execution speeds, as will be shown in Section \ref{sec: results}.
+
+
+\subsection{Ptolemaic Bounds}
+Recall that the triangle inequality relates the distances between three points,
+while Ptolemy's inequality does so for four points.
+At the end of an iteration of Elkan's algorithm (Step~5~to~7 in Alg.~\ref{alg:elkan}),
+the distance bounds between the data points $x_i$ and the new center positions $c'_j$ are calculated.
+Therefore, the three points used in the calculation of the bounds are the aforementioned two points and $c_j$, the cluster center calculated in the previous iteration.
+
+A natural extension to this procedure is then to use an even older cluster center $c^\prev_j$ as a fourth point,
+i.e. the cluster center calculated in the penultimate iteration.
+To formalize, Ptolemy's inequality can be used to calculate the following upper and lower bounds:
+
+\begin{theorem}[Ptolemaic bounds for Elkan's algorithm]
+	During an iteration of Elkan's algorithm,
+	let $x_i \in D \subset \mathbb{R}^n$ be a point from the dataset to be clustered,
+	$d$ the Euclidean distance function,
+	$c'_j$ a cluster center calculated in this iteration,
+	$c_j$ a cluster center calculated in the previous iteration, and
+	$c^\prev_j$ a cluster center calculated in the iteration before the previous iteration.
+	A lower and upper bound on $d(x_i,c'_i)$ is then given by
+	\begin{align}
+		\label{eq:pto_upper}
+		d(x_i, c_j') & \leq u_i' = \frac{1}{d(c_j, c_j^{\prev})} \cdot \left( u_i \cdot d(c_j', c_j^{\prev}) + u_i^{\prev} \cdot d(c_j', c_j) \right) \\
+		\label{eq:pto_lower}
+		d(x_i, c_j') & \geq l_{i,j}' = \frac{1}{d(c_j, c_j^{\prev})} \cdot \max \left\{
+		\begin{array}{l}
+			l_{i,j}^{\prev} \cdot d(c_j, c_j') - u_i \cdot d(c_j', c_j^{\prev}) \\
+			l_{i,j} \cdot d(c_j', c_j^{\prev}) - u_i^{\prev} \cdot d(c_j, c_j')
+		\end{array}
+		\right\}\;,
+	\end{align}
+	where $u_i, u^\prev_i$ ($l_{i,j}, l^\prev_{i,j}$) are the lower (upper) bounds calculated in the previous and the penultimate iteration, respectively\footnote{
+ For readability, we suppress the bounds' arguments in favor of indices, e.g. $u_i$ instead of $u(x_i)$.
+    }.
+\end{theorem}
+\vspace{-2\baselineskip}
+\begin{proof}
+	As all points are in the $\mathbb{R}^n$ and the distances function is also Euclidean, Ptolemy's inequality
+	$d(x, y)\cdot d(v, u) \leq d(x, v) \cdot d(y,v) + d(x, u) \cdot d(y, v)$ holds.
+	Eq.~\ref{eq:pto_upper} can easily be shown by rearranging Ptolemy's inequality and
+	noting that the upper bounds $u_i, u^\prev_i$ used in place of exact distances can only increase the right-hand side of the inequality. Thus, $d(x_i, c_j') \leq u_i'$ holds.
+
+	The process is similar for Eq.~\ref{eq:pto_lower}; as the signs on the right-hand side are not equal in this case, there are two distinct ways to substitute into Ptolemy's inequality.
+	This gives rise to two inequalities, of which the maximum is the stronger bound.
+	Analogous to $u'_i$, the right-hand side of Eq.~\ref{eq:pto_lower} can only be made smaller by inserting lower bounds $l_{i,j},l_{i,j}^\prev$ in the minuend or upper bounds $u_i, u^\prev_i$ in the subtrahend.
+	Thus, $d(x_i, c_j') \geq l_{i,j}'$ also holds.
+\end{proof}
+
+
+\subsection{Integration}
+To integrate the novel bounds into the existing framework of Elkan's algorithm,
+ Steps~6 and~7 in Alg.~\autoref{alg:elkan} need to be updated to use the new bounds.
+It is possible to only replace either the upper or lower bound, which leads to a hybrid solution that is further explored in Section \ref{sec: results}.
+
+As the Ptolemaic bounds require information from two previous iterations, the first iteration of the algorithm is always conducted with Elkan's original bounds.
+
+
+% As Elkan's algorithm tries to avoid distance calculations during the assignment step,
+% the bounds for the clusters–datapoint distances $d(x,c')$ are needed.
+% Thus, two of the point in the triangle inequality are the the data point $x$ and the new cluster position, while the third point 
+% As the majority of potential distance calulations are needed
+% Elkan's algorithm distance computations during The lower and upper bounds 
+% Two of these points have a 
+% In Elkan's original algorithm, the three points 
+
+
+
+
