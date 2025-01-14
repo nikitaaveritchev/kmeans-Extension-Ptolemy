@@ -8,20 +8,32 @@ This work explores the integration of **Ptolemy’s inequality**, a generalizati
 
 ## Repository Structure
 
+- **`main.py`**: Runs all experiments for the paper and creates the `results/*`; it calls:
 - **`means.py`**: Contains the implementation of the standard k-Means algorithm, Elkan’s algorithm, and the novel extension using Ptolemy’s inequality.
+- **`plot_results.py`**: Creates the singular plot of the paper.
+
+The repo also contains:
 - **`notebook.ipynb`**: A Jupyter Notebook demonstrating how to use the `means.py` module and showcasing key functionalities.
-- **`clustering_performance_results_formatted.csv`**: Contains the results of experimental evaluations, including performance metrics and comparisons across different implementations.
+- **`Makefile`**: Programmatic overview of how the files interact, to be run with GNU Make.
+- **`requirements.txt`** and **`pyproject.toml`**: Two most common formats to lists all python dependencies (and minimal versions, in the case of latter one).
+- **`results/clustering_performance_results_formatted.csv`**: Contains the results of experimental evaluations, including performance metrics and comparisons across different implementations.
 
 ## How to Use
 
 0. Install prerequisites:
 Building this paper requires python 3.9.21 or higher, lualatex 1.18.0, and GNU Make 4.4.1. It optionally requires qpdf 11.9.1 to linearize the resulting paper. See `pyproject.toml` for the version requirements of the python libraries used.
-
 You might be able to use older version of the listed software, but we cannot guarantee compatibility or identical outputs. The code was run and paper created on Linux 6.12.8.
 
-1. Clone the repository:
+1. Clone the repository :
    ```bash
-   git clone https://github.com/your-username/kmeans-Extension-Ptolemy.git
+   git clone git@github.com:nikitaaveritchev/kmeans-Extension-Ptolemy.git
+   cd kmeans-Extension-Ptolemy
+   ```
+
+2. Run the build script:
+  ```bash
+  make all
+  ```
 
 
 ## License
