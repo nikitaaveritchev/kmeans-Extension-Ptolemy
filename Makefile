@@ -19,10 +19,24 @@ results/combined_plot.pdf results/clustering_performace_results_formatted.xlsx: 
 	mkdir -p results
 	.venv/bin/python main.py
 
-.venv: requirements.txt
+.venv: requirements.txt check-dependencies
 	python3 -m venv .venv
 	.venv/bin/pip install -r requirements.txt
-	
+
+check-dependencies:
+	@if ! which python3; then \
+		echo "Python is not installed. Please install Python."; \
+		exit 1; \
+	fi
+	@if ! python3 -c "import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)"; then \
+		echo "Python version is less than 3.9. Please install Python 3.9 or higher."; \
+		exit 1; \
+	fi
+	@if ! which lualatex; then \
+		echo "lualatex is not installed. Please install lualatex."; \
+		exit 1; \
+	fi
+
 clean:
 	-rm -r results
 	-rm -r paper/build
@@ -30,4 +44,3 @@ clean:
 	-rm -r paper/fig/combined_plot.pdf
 	
 .PHONY: clean all code
-
