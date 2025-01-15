@@ -1,10 +1,10 @@
-# Extending K-Means Clustering with Ptolemy’s Inequality - Bachelor Thesis
+# Extending K-Means Clustering with Ptolemy’s Inequality
 
 ## Motivation
 
 k-Means clustering is one of the most widely used clustering methods. The Lloyd algorithm serves as the de facto standard for optimizing cluster centroids in k-Means by minimizing intra-cluster dissimilarity. Despite its age, Lloyd’s algorithm remains relevant due to numerous adaptations over time. One such adaptation is Elkan’s algorithm, which improves efficiency by leveraging the triangle inequality to reduce the number of distance computations during clustering.
 
-This work explores the integration of **Ptolemy’s inequality**, a generalization of the triangle inequality, into the k-Means framework. The goal is to further enhance computational efficiency while maintaining clustering quality. The results demonstrate the theoretical and practical potential of this approach.
+This work explores the integration of **Ptolemy’s inequality**, a property in Euclidean metric spaces similar to the triangle inequality, into the k-Means framework. The goal is to further enhance computational efficiency while maintaining clustering quality. The results demonstrate the theoretical and practical potential of this approach.
 
 ## Repository Structure
 
