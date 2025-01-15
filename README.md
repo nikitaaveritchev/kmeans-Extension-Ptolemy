@@ -39,10 +39,10 @@ We tested with the following software versions. Higher versions are very likely 
    ```
 
 2. Run the build script:
-  ```bash
-  make all
-  ```
-  It takes about an hour of (single CPU) runtime to run all experiments and build the final PDF.
+   ```bash
+   make all
+   ```
+   It takes about an hour of (single CPU) runtime to run all experiments and build the final PDF.
 
 
 ## License
