@@ -19,10 +19,18 @@ The repo also contains:
 - **`results/clustering_performance_results_formatted.csv`**: Contains the results of experimental evaluations, including performance metrics and comparisons across different implementations.
 
 ## How to Use
+The easiest way to reproduce our results is to fork this repository and use Github actions to run our code.
 
-0. Install prerequisites:
-Building this paper requires python 3.9.21 or higher, lualatex 1.18.0, and GNU Make 4.4.1. It optionally requires qpdf 11.9.1 to linearize the resulting paper. See `pyproject.toml` for the version requirements of the python libraries used.
-You might be able to use older version of the listed software, but we cannot guarantee compatibility or identical outputs. The code was run and paper created on Linux 6.12.8.
+### System Requirements
+We tested with the following software versions. Higher versions are very likely to work, lower versions might work, but we cannot guarantee compatibility or identical outputs.
+
+- Linux (we tested successfully on ubuntu-24.04 and arch-linux-6.12.8)
+- 1 CPU, about 500 MB of disk space (mainly for the venv), TODO GB of memory
+- Software
+  - python 3.9.21 or higher
+  - texlive's lualatex 1.18.0
+  - GNU Make 4.4.1  
+  - optional: qpdf 11.9.1 to linearize the PDF paper
 
 1. Clone the repository :
    ```bash
@@ -34,6 +42,7 @@ You might be able to use older version of the listed software, but we cannot gua
   ```bash
   make all
   ```
+  It takes about an hour of (single CPU) runtime to run all experiments and build the final PDF.
 
 
 ## License
