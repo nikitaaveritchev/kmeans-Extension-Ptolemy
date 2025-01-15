@@ -29,7 +29,7 @@ We tested with the following software versions. Higher versions are very likely 
 - Software
   - python 3.9.21 or higher
   - texlive's lualatex 1.18.0
-  - GNU Make 4.4.1  
+  - GNU Make 4.4.1
   - optional: qpdf 11.9.1 to linearize the PDF paper
 
 1. Clone the repository :
