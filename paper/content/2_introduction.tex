@@ -23,7 +23,7 @@ With the proliferation of complex data sources and the growing demand for more e
 
 The Elkan algorithm \cite{DBLP:conf/icml/Elkan03} is a prominent representative of these algorithms and particularly suited for high-dimensional scenarios.
 It maintains one upper bound and multiple lower bounds for each data object in order to apply different pruning criteria for each combination of data object and cluster center.
-While the lower and upper bounds of Elkan's algorithm are directly derived from the triangle inequality, we propose to utilitze Ptolemy's inequality instead in order to increase the pruning performance.
+Elkan's lower and upper bounds are directly derived from the triangle inequality; we propose to also utilize Ptolemy's inequality to increase the pruning performance, as this inequality has been successfully employed for database indexing \cite{hetlandPtolemaicAccessMethods2013,hetlandPtolemaicIndexing2015}.
 With this extension, we do not aim to compete with the state of the art in k-means clustering;
 rather, we intend to investigate the potential of Ptolemy’s inequality to further enhancements in the standard algorithm’s performance, specifically in terms of reducing computations associated with distance evaluations. We believe that our research findings offer a promising direction for future research and are beneficial for data scientists researchers and practitioners alike.
 
