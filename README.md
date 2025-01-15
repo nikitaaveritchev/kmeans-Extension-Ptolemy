@@ -25,7 +25,7 @@ The easiest way to reproduce our results is to fork this repository and use Gith
 We tested with the following software versions. Higher versions are very likely to work, lower versions might work, but we cannot guarantee compatibility or identical outputs.
 
 - Linux (we tested successfully on ubuntu-24.04 and arch-linux-6.12.8)
-- 1 CPU, about 500 MB of disk space (mainly for the venv), TODO GB of memory
+- 1 CPU, about 500 MB of disk space (mainly for the venv), 1 GB of memory
 - Software
   - python 3.9.21 or higher
   - texlive's lualatex 1.18.0
