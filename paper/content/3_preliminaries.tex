@@ -56,7 +56,7 @@ given its widespread use, we will only cover its most significant characteristic
 		\State \textcolor{gray}{// Assign \( x_i \) to the closest cluster}
 		\For{each object \( x_i \) in \( D \)} 
 		\label{algstep:assign}
-		\State \( C_j \leftarrow C_j \cup \{x_i\} \) where \( j = \underset{j}{\arg\min} \; d^2(x_i, c_j) \)
+		\State \( C_j \leftarrow C_j \cup \{x_i\} \) where \( j = \underset{j'}{\argmin} \; d^2(x_i, c_{j'}) \)
 		\EndFor
 		\State \textcolor{gray}{// Update cluster center \( c_j \)}
 		\For{each cluster \( C_j \)}

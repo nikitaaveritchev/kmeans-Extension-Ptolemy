@@ -2,7 +2,7 @@
 	\caption{Elkan's Algorithm}
 	\label{alg:elkan}
 	\begin{algorithmic}
-		\State \textbf{Initialization:} Initialize all cluster centers. For each point $x_i$ and each center $c_j$, set the lower bound $l(x_i,c_j)$ and the upper bound $u(x_i)$. Assign each $x_i$ to the nearest cluster $C_j$ such that $c(x_i) = \argmin_j d(x_i, c_j)$, utilizing that
+		\State \textbf{Initialization:} Initialize all cluster centers. For each point $x_i$ and each center $c_j$, set the lower bound $l(x_i,c_j)$ and the upper bound $u(x_i)$. Assign each $x_i$ to the nearest cluster $C_j$ such that $c(x_i) = \argmin_{j'} d(x_i, c_{j'})$, utilizing that
 		$ d(c_j, c_m) \geq 2d(x_i, c_j) \Rightarrow d(x_i, c_m) \geq d(x_i, c_j) $
 		to minimize distance calculations. Set $r(x_i) = \text{true}$ for all points.
 
